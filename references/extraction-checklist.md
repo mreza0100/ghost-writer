@@ -1,0 +1,70 @@
+# Extraction Checklist
+
+A reference used during Mode A (extract) to make sure the corpus is good enough and the analysis covers the dimensions that matter. Read this before beginning extraction; cite specific items by name when you note confidence in the profile.
+
+## Corpus preparation
+
+Before reading anything, check the corpus against these rules. They came from Sam Dumont's voice-skill methodology and are the difference between capturing a writer's voice and capturing the conventions of one platform they happen to use.
+
+**Minimum bar.** 10+ documents across 2+ formats. A "format" is the medium: blog post, email, Slack message, doc, forum comment, tweet. The diversity is non-negotiable: with one format, you capture the format's conventions (Slack: short, lowercase, emoji-tolerant; email: greeting + sign-off; LinkedIn: line breaks every sentence) and bake them in as personal voice. Done that way, the imitation reads fine in the source medium and obviously wrong everywhere else.
+
+**Authenticity.** AI-generated content in the corpus poisons everything. If the writer used Claude or any LLM to draft a piece, exclude it. Encoding LLM patterns as personal voice is the worst possible failure mode of this skill. When in doubt, ask the user. If a piece reads like default-LLM prose (em-dashes everywhere, "moreover," neat tricolons, balanced paragraph lengths, "ever-evolving landscape"), flag it — the answer matters. See `llm-isms.md` for the detection cues.
+
+**Recency.** Writing styles drift. Samples from the last 2 years are worth more than samples from 5 years ago. Note the date range of the corpus in the profile so future audits (Mode C) can compare apples to apples.
+
+**Length variety.** Voice manifests differently in a 3-sentence Slack message and a 2,000-word essay. Include both. A profile built only on long-form will mis-fire on short-form, and vice versa.
+
+**Single-author.** All samples must be from the writer being profiled. This sounds obvious; it gets violated when "samples I wrote" includes pieces a co-author or editor heavily revised. Ask explicitly.
+
+If the corpus fails any of these rules, the profile will be tentative. Say so explicitly in the profile's Confidence notes section, rather than producing a confident profile from thin material.
+
+## The 8-dimension extraction grid
+
+When you read the corpus, scan along each of these dimensions independently. Patterns in one dimension don't predict patterns in another — a writer can have idiosyncratic vocabulary and totally vanilla sentence structure, or vice versa. Treating each dimension separately catches things a one-pass read misses.
+
+For each dimension, look for **patterns that repeat across the corpus** (not single occurrences). Capture: the rule, a short quoted example, a frequency or density figure, and a VOICE / PLATFORM / BORDERLINE classification.
+
+1. **Sentence patterns.** Average length and standard deviation (call this "burstiness" — a writer running 5- and 35-word sentences alternately has very different rhythm from one running 18 ± 4). Use of fragments. Parenthetical asides. How clauses join — comma splices, em-dashes, semicolons, conjunctions, colons. Where verbs land in the sentence. List handling (inline vs bullet).
+
+2. **Opening patterns.** How does the writer start each format? Blog posts vs. emails vs. Slack messages vs. docs. The first 1–3 sentences of each piece. Look for repeated openers ("So,", "OK,", "Quick q:", lowercase-no-greeting). These are the clearest voice fingerprints in many writers.
+
+3. **Vocabulary fingerprint.** Pet phrases that recur 2+ times verbatim. Register (casual / formal / technical / clinical / chatty). Domain jargon — does the writer define terms, assume them, or alternate? Code-switching patterns (across languages or registers). Words the writer demonstrably avoids (the **never-say** list — important and often missed).
+
+4. **Structural patterns.** How does information get ordered in a piece? Top-line first vs. buildup? Headers and how the writer uses them (or doesn't)? Bullet density. Use of bold / italics / inline code. Visual aids (tables, code blocks, images).
+
+5. **Tone markers.** Formality per format. Humor mechanisms (deadpan, hyperbole, self-deprecation, callbacks, none). Directness vs. hedging. How the writer handles disagreement — softens, escalates, ignores. Emotional register: is there one, is it suppressed, does it spike in specific contexts?
+
+6. **Formatting habits.** Capitalization (sentence-initial caps, ALL-CAPS for emphasis, lowercase-everywhere, Title Case headers). Punctuation preferences (em-dash density per 1000w, semicolon presence, ellipsis use, exclamation rate, Oxford comma). Curly vs. straight quotes. Spelling consistency and tolerated typos. Markdown habits.
+
+7. **Language-specific patterns.** Code-switching across languages. Greeting and sign-off conventions. Spelling variants (American / British / regional). Loan words and how they're rendered. (For multilingual writers, voice often travels across languages but vocabulary fingerprint partially resets.)
+
+8. **LLM-ism scan.** Does the corpus already show AI-tells? See `llm-isms.md` for the 29-pattern catalog. If the corpus has clusters of catalog patterns — em-dash overuse, "moreover" / "furthermore," neat tricolons, balanced paragraph lengths — pause and verify with the user before encoding any of them as personal voice.
+
+## Quantitative numbers to record
+
+Compute these from the corpus. They're cheap, hard to fake during generation, and become the diagnostic baseline for Mode C (audit) — drift shows up here before you can see it any other way.
+
+- **Average sentence length** (words/sentence) and **standard deviation (= burstiness)**
+- **Average paragraph length** in sentences
+- **Type-token ratio** in a fixed window (~unique words / total words in first 500 words of long-form samples) — vocabulary diversity
+- **Em-dash, semicolon, colon, ellipsis rates per 1000 words**
+- **Contraction rate** — actual contractions / contraction-eligible verb constructions
+- **Hedge-word rate** ("kind of", "sort of", "maybe", "might", "I think", "probably", "sort of") per 1000 words
+- **Top 5 sentence-initial connectors** with counts ("so", "but", "and", "anyway", "honestly", etc.)
+- **Exclamation rate / 1000 words**
+
+If the corpus is small (under ~1500 words total), say "rough estimates from a small corpus" and round generously. Don't fake precision.
+
+## What human review catches that automated extraction misses
+
+After the first-pass profile is drafted, set aside automated reasoning and ask: would the writer read this profile and recognize themselves?
+
+The patterns automated extraction reliably misses (per Dumont):
+
+- **One-time tics misclassified as patterns.** A single occurrence of "ahah" once isn't a rule. Three occurrences in three separate pieces is.
+- **Patterns that need format conditioning.** "Uses lowercase sentence starts" — but only in Slack and Reddit, not in emails to clients. The rule should be conditional, not blanket.
+- **Negative rules that are louder than positive rules.** "Never says 'utilize'" or "never starts emails with 'I hope this finds you well'" can be more diagnostic than what they do say.
+- **The shape of disagreement and pushback.** Most corpora bias toward neutral writing; the writer's voice in conflict is often invisible from a generic sample set. If possible, include at least one piece where the writer disagrees with someone.
+- **Cross-language carry-over.** For multilingual writers, certain habits (punctuation conventions, sentence rhythm) carry across languages while vocabulary doesn't. This is hard to spot without explicitly looking.
+
+The Mode A.5 calibration round exists to surface these. The 7-tag feedback (`WRONG / OVERSTATED / UNDERSTATED / MISSING / NEEDS_NUANCE / LLM_ISM / NOT_ME`) maps directly to fixes — see SKILL.md.
