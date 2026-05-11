@@ -1,5 +1,5 @@
 ---
-name: gwriter
+name: ghostwriter
 description: Use this skill whenever the user wants to capture how a specific person writes from a sample of their text and/or generate new text in that exact style, audit a profile against recent writing for drift, or update a profile to close gaps. Trigger phrases include "match my writing style", "write like this", "mimic this writer", "in the style of [person/text]", "make it sound like me", "extract the style from this", "write the rest of this in the same voice", "study how I write", "learn my writing", "style profile", "voice profile", "voice DNA", "audit my voice profile", "update my style profile", or any time the user pastes a long sample of someone's writing and asks for new text that should sound the same. Also trigger when the user wants a reusable style profile they can apply later. Do NOT use this skill for generic copyediting, grammar fixes, or simple tone shifts (formal/casual) — this skill is specifically for reproducing one specific person's mechanical writing fingerprint (vocabulary, sentence rhythm, punctuation quirks) grounded in evidence from a corpus.
 ---
 
@@ -33,6 +33,21 @@ Pick the mode based on what the user asked for. Modes can chain in one response.
 - **Mode D — Update.** Existing profile + audit findings or feedback → revised profile + changelog.
 
 If the user gives a sample and asks for new text in one go, do A then B. If they bring a profile that's been around for weeks and want it tuned to recent work, do C then D. **Profiles compound with iteration** — every audit-update cycle makes the profile sharper. Treat it as a living document, not a one-shot artifact.
+
+## Built-in profiles
+
+One profile ships with the skill. It lives at `profiles/human.md` and is the default fallback.
+
+- **`human`** — the **negative profile**. Instead of capturing one writer's fingerprint, it bans the full 29-pattern LLM-ism catalog (see `references/llm-isms.md`) and sets human-typical density ranges (burstiness σ ≥ 7, em-dash ≤ 3/1000w, no rule-of-three lists, etc.). Use it when:
+     - The user asks to "humanize" some AI-sounding text — no specific writer involved, just remove the tells.
+     - The user wants generic-but-human writing and hasn't profiled anyone yet.
+     - A specific person's profile is too thin to use confidently — fall back to `human` and prompt for more samples.
+
+This is a different _kind_ of profile from a person profile — it has no pet phrases, no fingerprint to reproduce, no signature moves. The whole point is the absence of identifiable patterns plus the LLM-tell ban list. Treat it as the floor: any person profile should at least clear what `human` clears, and add a fingerprint on top.
+
+Don't run Mode A.5 (calibration) or Mode C (audit) on `human` — there's no source corpus to drift from. Mode B is the only mode that meaningfully applies.
+
+If the user asks to write something and doesn't specify a profile, default to `human` rather than asking. Quietly mention which profile was used in the "Rules applied" note so they can swap if they wanted a specific person.
 
 ## Core principles
 
@@ -204,54 +219,6 @@ Three short examples that demonstrate the voice across the formats above. These 
 - <Aspects that couldn't be read confidently from this corpus's coverage.>
 - <Open questions for the user.>
 
-## Generation instructions
-
-These instructions are embedded in the profile so that generation (`/ghostwriter generate`) can read THIS FILE ONLY, without loading SKILL.md. Follow them exactly when generating text in this voice.
-
-### How to generate
-
-1. Read every section of this profile top-down before drafting. The order matters — banned words and anti-performative rules shape every following choice.
-2. Check the priority hierarchy: does the writing task have conventions that override personal style?
-   - **Hard contextual norms** (legal, academic, regulatory) override personal style. Apply voice only at margins.
-   - **Audience norms** (exec summary for a CEO) → compress; keep voice cues; downscale density.
-   - **Personal style** → default for blog posts, emails, social posts, casual writing.
-   - **Platform conventions** → apply on top of style, only for the target platform.
-3. Draft. Reproduce rules at documented densities. Match densities; don't crank.
-4. Run the two-pass self-review before delivering.
-5. Append the "Rules applied" note.
-
-### Two-pass self-review
-
-**Pass 1 — LLM-ism scan.** Skim the draft for: stacked em-dashes, "moreover / furthermore / actually", neat tricolons, balanced paragraph lengths, "It's not just X, it's Y" constructions, "navigate the complexities", "in today's fast-paced world", chatbot closers, "great question" sycophancy. For every match: is it in the corpus at this density? If yes, keep. If no, revise.
-
-**Pass 2 — Performative scan.** Look for "signature moves" applied loudly. Check Section 2 (anti-performative rules): is this move high-density in the corpus, or did you crank a one-time tic into a catchphrase? If cranked, dial down. Smell test: would the writer's friend roll their eyes reading this?
-
-### Failure modes to avoid
-
-- **Topic drift bias.** Match the style, not the subject matter of the corpus.
-- **Caricature.** Match densities, not just presence.
-- **Default-Claude leak.** Well-balanced, varied prose with confident verbs and tidy transitions is your default voice, not theirs. Lean into the messier and weirder spots.
-- **Persona invention.** Don't invent personality, opinions, or biographical hooks.
-- **Length mismatch.** Infer length from the writing task, not the corpus.
-- **Platform contamination.** Don't import another platform's conventions.
-
-### "Rules applied" note
-
-End every generated text with:
-
-```
----
-**Rules applied (top hits):**
-- <Rule>: <how reproduced, with target density if relevant>
-- <Rule>: <how reproduced>
-
-**Self-review:**
-- LLM-ism pass: <patterns found and removed, OR "none flagged">
-- Performative pass: <quirks dialed back, OR "no cranking detected">
-
-**Trade-offs:** <if priority hierarchy kicked in, mention briefly. Otherwise omit.>
-```
-
 ## Changelog
 
 - <YYYY-MM-DD> Created from <source>. <N> docs, <list formats>.
@@ -283,14 +250,29 @@ Dumont reports his profile grew 333 → 510 lines through three calibration roun
 
 ---
 
-## Mode B: Generate text in the style
+## Mode B: Generate (or humanize) text in the style
 
-1. If the user hands you a profile, treat it as authoritative. **Read every section, top-down.** The order matters — banned words and anti-performative rules go first because they shape every following generation choice.
-2. If the user gives raw corpus + prompt without first asking for a profile, do a quick mental extract. Stay evidence-grounded. Optionally offer to save the profile.
-3. Check the **priority hierarchy** (next section).
-4. Draft. Reproduce rules at documented densities. Match densities; don't crank.
+Mode B covers two related operations that use the same machinery:
+
+- **Generate** — input is a writing prompt; produce new text in the profile's style.
+- **Humanize** — input is existing AI-sounding text; rewrite it through the profile (typically `human`) to remove LLM-tells.
+
+Both follow the same steps below; the only difference is whether you're starting from a prompt or from an existing draft to revise.
+
+### Choosing a profile
+
+1. If the user names a profile, use it.
+2. If the user provides a corpus and asks for new text in one go, do Mode A first (quick), then come back here.
+3. If neither, default to `profiles/human.md` and note which profile was used in the Rules applied note. Don't ask which profile to use for routine requests — defaulting to `human` is the right call and trivial to override.
+
+### Steps
+
+1. **Read the profile top-down.** Order matters. Banned words and anti-performative rules go first because they shape every following generation choice — internalize them before writing a single word.
+2. If the input is existing text (humanize), read it once for content, once for which LLM-isms it contains (cross-reference `references/llm-isms.md`). Plan the rewrite at the paragraph level, not the sentence level — wholesale restructuring usually beats find-and-replace.
+3. Check the **priority hierarchy** (next section). Conventions of the writing context (legal, academic, regulated) can override the profile.
+4. Draft (or rewrite). Reproduce profile rules at documented densities. Match densities; don't crank. For the `human` profile especially, **vary sentence length aggressively** — burstiness σ ≥ 7 is the single most important target.
 5. Run the **two-pass self-review** before delivering.
-6. Append the **Rules applied** note.
+6. Append the **Rules applied** note (with profile name).
 
 ### Priority hierarchy (when style and context conflict)
 
@@ -328,6 +310,9 @@ End the response with:
 ```markdown
 ---
 
+**Profile used:** `<profile name>` (e.g., `human` default, or `<person>`)
+**Operation:** generate | humanize
+
 **Rules applied (top hits):**
 
 - <Rule>: <how reproduced, with target density if relevant>
@@ -342,7 +327,7 @@ End the response with:
 **Trade-offs:** <if priority hierarchy kicked in, mention briefly. Otherwise omit.>
 ```
 
-Keep it short — audit trail, not essay.
+Keep it short — audit trail, not essay. The profile-name line matters even when defaulting to `human` — the user needs to see which profile ran so they can swap if they meant a specific person.
 
 ---
 

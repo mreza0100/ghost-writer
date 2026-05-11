@@ -1,0 +1,176 @@
+# Style Profile: human (built-in default)
+
+Source corpus: no specific writer. This is the **negative profile** — it defines human writing by the absence of LLM-tells rather than the presence of any one person's fingerprint.
+
+Profile created: built-in. Last audit: —.
+
+## What this profile is
+
+Most profiles in this skill answer the question _"how does this specific person write?"_ by pinning down density-based rules from a corpus.
+
+This one answers a different question: _"how do humans write, in general, when nothing AI-shaped is leaking through?"_ The answer is mostly: with variety. The reason LLM prose is identifiable isn't that it uses bad words — it's that it uses _the same words and shapes too consistently_. Human prose is bursty, uneven, sometimes weird, and never settles into the LLM-default rhythm of balanced paragraphs and confident transitions.
+
+So this profile is dominated by what to _avoid_ (Section 1) and what _not_ to be consistent about (Sections 3 and 5). The positive rules are deliberately thin — there's no fingerprint to reproduce, just a clearing where one could exist.
+
+Use this profile when:
+
+- The user asks to "humanize" text — the input is AI-sounding prose, and they want it rewritten to read human.
+- The user wants generic-but-human writing and hasn't profiled a specific person yet.
+- A specific person's profile is too thin to use confidently — fall back to `human` and ask for more samples.
+
+Don't use this profile when the user has a specific person in mind. Use their profile instead.
+
+## 1. Banned words & phrases (full LLM-ism catalog)
+
+This is the longest section because it's the most important. Position matters: ban-list rules encountered early in the profile have the strongest influence on generation. Every item below maps to a pattern in `references/llm-isms.md` — read that file for cues, examples, and fixes.
+
+### Banned content moves (catalog patterns 1–6)
+
+- **No significance inflation.** Don't open with "marking a pivotal moment in…" or "a transformative milestone in…" State the fact.
+- **No notability name-dropping.** Don't list prestige outlets (NYT, BBC, FT…) without specifics. Cite one source with a year, or drop it.
+- **No superficial -ing analyses.** Chains like "symbolizing… reflecting… showcasing… underscoring…" are banned. Replace with a concrete claim.
+- **No promotional language.** "Nestled in the breathtaking…", "a vibrant hub of…", "captivating", "compelling".
+- **No vague attributions.** "Experts believe", "industry observers", "some say". Name a specific source.
+- **No formulaic challenges trope.** "Despite challenges… continues to thrive."
+
+### Banned vocabulary (catalog pattern 7 — the long list)
+
+These words are statistically overrepresented in LLM-generated prose. Most have a plainer alternative.
+
+- _actually, additionally, moreover, furthermore, however_ (overused as transitions)
+- _testament, landscape, showcasing, leverage, robust, seamless, holistic, comprehensive, intricate_
+- _vital, crucial, significant, profound, pivotal, transformative, groundbreaking, cutting-edge, state-of-the-art, ever-evolving_
+- _navigate, delve, unlock, foster, bolster, underscore, illuminate, illustrate, exemplify_
+- _amplify, champion, craft (as "craft a solution"), elevate, embark, empower, harness, pioneer, resonate, spearhead, supercharge, transcend, unleash, unveil, utilize_ (just say "use")
+- _meticulous, multifaceted, nuanced, paramount, remarkable, revolutionary, unparalleled, vibrant, impactful, actionable, bespoke, captivating, insightful_
+
+If you reach for one of these, stop and pick a plainer word. "Use" not "utilize". "Help" not "empower". "Is" not "serves as". "Show" not "showcase".
+
+### Banned constructions (catalog patterns 8–13)
+
+- **No copula avoidance.** "Serves as a / functions as a / stands as a / acts as a / features / boasts" → use _is_ and _has_.
+- **No negative parallelisms / tailing negations.** "It's not just X, it's Y." "…, no guessing required." State the point directly.
+- **No rule-of-three lists.** Three parallel items with matching shape and length ("innovation, inspiration, and insights") is the most reliable LLM tell. Use the natural number of items — usually two or four. If three is genuinely right, break the parallelism (different lengths, different forms).
+- **No synonym cycling.** _The protagonist… the main character… the central figure… the hero…_ Pick one term and repeat it. Repetition is fine; cycling reads as a thesaurus exercise.
+- **No false ranges.** "Topics range from the Big Bang to dark matter." "From beginners to experts." List the items directly.
+- **No subjectless passive fragments.** "No configuration needed." "Tests run automatically." Name the actor when it helps clarity.
+
+### Banned style patterns (catalog patterns 14–23)
+
+- **Em-dashes: max ~3 per 1000 words.** Prefer commas, periods, or rewriting. The em-dash is the single most identifiable formatting tell of LLM text because LLMs use it as a universal clarification tool. Replace with colons for explanation, parentheses for asides, periods for new thoughts.
+- **No boldface for key terms.** Don't bold concepts in every paragraph. Bold sparingly or not at all.
+- **No inline-header lists.** "**Performance:** Performance improved by 40%" — convert to prose or use a real header.
+- **Headings in sentence case, not Title Case.** "Strategic negotiations and partnerships", not "Strategic Negotiations And Partnerships".
+- **No emojis as section markers.** "🚀 Launch phase. 💡 Key insight." Remove.
+- **Match the source's quote style.** Don't auto-insert curly quotes if the writer uses straight quotes.
+- **No stacked compound modifiers.** "Cross-functional, data-driven, client-facing, mission-critical, end-to-end." Drop the hyphens or rephrase.
+- **No persuasive authority tropes.** "At its core, what matters is…" "The truth is, …" "Make no mistake — …" State the point.
+- **No signposting announcements.** "Let's dive in", "Here's what you need to know", "Buckle up". Start with the content.
+- **No fragmented headers.** A header followed by a one-sentence stub that repeats the header word.
+
+### Banned communication patterns (catalog patterns 24–26)
+
+- **No chatbot artifacts.** "I hope this helps!" "Let me know if you'd like me to expand on any section!" Cut entirely.
+- **No cutoff disclaimers.** "While specific details are limited based on available information…" "Based on data available up to my training cutoff…" Find sources or remove.
+- **No sycophancy.** "Great question!" "You're absolutely right!" "What a thoughtful framing." Respond to the substance.
+
+### Banned filler and hedging (catalog patterns 27–29)
+
+- **No filler phrases.** "In order to" → "to". "Due to the fact that" → "because". "At this point in time" → "now". "It is important to note that" → cut.
+- **No excessive hedging.** "Could potentially possibly…" "It might perhaps be the case that…" Pick one hedge or commit.
+- **No generic conclusions.** "The future looks bright." "Exciting times lie ahead." "Only time will tell." End on a specific claim, a plan, a fact — or just stop.
+
+## 2. Anti-performative rules
+
+This profile has no fingerprint to mimic, so there's nothing to crank up by accident — but there's a related failure mode worth guarding against: _manufacturing_ fingerprint where none exists. When humanizing AI text or generating fresh, the temptation is to dial in quirks ("let me add some !" or "let me throw in a sentence fragment.") to make it feel personal. Don't.
+
+- One distinctive habit is fine. Three start to feel performative.
+- Don't add casualisms ("lol", "fr", "tbh", emoji) unless the writing task demands them.
+- Don't add hedges or "I think" framings just to sound less authoritative — humans are often direct.
+- Don't add stutters, parentheticals, or asides to manufacture texture. Texture comes from variability of length and rhythm, not from sprinkled quirks.
+
+## 3. Quantitative layer (human-typical density ranges)
+
+These aren't targets to hit exactly. They're the rough envelope of human prose. Generated text that falls inside this envelope reads human; text that falls outside (especially on burstiness) reads AI.
+
+| Metric                                | Human-typical range              | LLM-default (avoid)             |
+| ------------------------------------- | -------------------------------- | ------------------------------- |
+| Avg sentence length                   | 12–22 words                      | 18–22 words (centered)          |
+| **Burstiness (σ of sentence length)** | **7–14 words**                   | **3–6 words**                   |
+| Avg paragraph length                  | 1–8 sentences (highly variable)  | 3–5 (uniform)                   |
+| Type-token ratio (first 500w)         | 0.45–0.65                        | 0.60–0.75 (over-varied)         |
+| Em-dashes / 1000w                     | 0–3                              | 5–15                            |
+| Semicolons / 1000w                    | 0–4                              | 0–2 (LLMs underuse)             |
+| Contraction rate                      | 60–90% (casual); 20–50% (formal) | 30–60% (regardless of register) |
+| Hedge-word rate / 1000w               | 0–8 (varies wildly)              | 4–10 (uniform)                  |
+| Exclamation rate / 1000w              | 0–5 (casual); ~0 (formal)        | 0–2 (regardless)                |
+| Rule-of-three lists per 1000w         | 0–1                              | 3–8                             |
+
+**The single most important number here is burstiness.** Aim for σ ≥ 7. Mix one short sentence (5–8 words) into every 4–6 long ones (20+ words). If every sentence in a paragraph lands within ±5 words of the average, the paragraph reads AI even if every other rule is satisfied. This is the variation-is-the-rule principle, and it's the hardest one to fake by accident.
+
+## 4. Vocabulary tendencies
+
+- **Repeat words rather than cycling synonyms.** If "protagonist" is the clearest word, use it four times in a paragraph. Don't reach for "central figure", "main character", "hero".
+- **Use plain verbs.** _Use, make, do, get, have, go, take, give, show, find_ before _utilize, craft, foster, leverage, harness_.
+- **One precise word over two vague modifiers.** _Slow_ beats _somewhat sluggish_. _Wrong_ beats _not entirely correct_.
+- **Concrete over abstract when possible.** Numbers, names, dates, places. "$40", not "a modest sum". "Tuesday", not "earlier in the week".
+- **Match register to context.** Casual contexts get contractions and informal connectors ("so", "but", "anyway"). Formal contexts get full forms and "however", "although".
+
+## 5. Sentence structure & rhythm
+
+- **Vary sentence length within every paragraph.** This is the single biggest tell. LLMs default to uniformity; humans don't.
+- **Fragments are allowed.** "Worth it." "Not great." "Maybe." Use sparingly; one or two per ~10 sentences is plenty.
+- **Mix clause-joining moves.** Don't lean on em-dashes (banned anyway). Use commas, periods, semicolons (if the register permits), and conjunctions.
+- **One short sentence near the end of a paragraph often works.** It lands the point. LLMs rarely do this.
+- **Don't pad with transitional sentences.** "With that said,", "That being said,", "On the other hand," — usually droppable.
+
+## 6. Quirks & idiosyncrasies (intentionally minimal)
+
+There are none in this profile, by design. If you find yourself wanting to add a quirk to make the output feel less neutral, resist. The right move is to pull from the corpus of an actual person — switch profiles.
+
+## 7. Negative rules (the strict list)
+
+Everything in Section 1 is also a negative rule. The 29 patterns from `references/llm-isms.md` are banned by default in this profile. Run a self-check against the full catalog before delivering any text.
+
+Additional negatives:
+
+- **No throat-clearing openers.** Don't start a piece with "Let me start by saying", "I'll begin with", "Before I get into it". Start with the content.
+- **No uniform paragraph lengths.** If three paragraphs in a row are within ±20% of the same word count, the piece reads AI. Vary the shape.
+- **No "delve" or its synonyms** ("dive into", "explore in depth", "unpack"). Just do the thing.
+
+## 8. Default mode
+
+**Informational** — direct, factual, no narrative arc by default. The user can override per task ("write this as a story", "write this for a blog post with a hook"), but in the absence of direction, default to informational and short.
+
+## 9. Format-specific modes (general guidance)
+
+Because this profile isn't tied to a specific writer, the format guidance is generic. The user should override if they have specific format conventions in mind.
+
+- **Long-form / blog:** narrative arc allowed when the user asks for it; 1–6 sentence paragraphs; vary opener sentence length per paragraph.
+- **Email:** brief greeting only if external; one-line context; one paragraph of substance; clear ask or close. No "I hope this finds you well".
+- **Slack / chat:** short messages; lowercase sentence starts allowed; no closing; full thoughts in 1–2 sentences max.
+- **Documentation / technical:** instruction-oriented; numbered steps when steps are sequential; code in code blocks; no "as a developer, you'll appreciate".
+
+## 10. Voice in action (humanize example)
+
+The clearest demonstration of this profile is a before/after pair. The "before" is dense LLM-default prose; the "after" is the same content rewritten through this profile.
+
+**Before (AI-default):**
+
+> AI-assisted coding serves as a transformative tool in modern software development, marking a pivotal moment in how engineers approach their craft. In today's rapidly evolving technological landscape, these groundbreaking tools — nestled at the intersection of research and practice — are reshaping workflows, fostering collaboration, and empowering developers to deliver more impactful results. It's not just autocomplete; it's a paradigm shift. While challenges remain, the future looks bright.
+
+**After (this profile applied):**
+
+> AI coding assistants speed up the boring parts. They're good at boilerplate — config files, the glue code you don't want to write — and decent at sketching a test. You still have to read the test. The risk is how confident the suggestions look. I've taken code that passed lint and discovered later it missed the point, because I stopped paying attention. The only real backstop is tests. Without them, you're judging vibes.
+
+Differences worth noting: no banned vocabulary, em-dash density dropped from ~5/100w to ~0.3/100w (one in the new version, in a place that earns it), no rule-of-three lists, no "it's not just X, it's Y", no generic conclusion. Sentence length varies (5 / 19 / 6 / 25 / 11 / 9 / 14). Burstiness σ ≈ 7 in the after, ≈ 4 in the before. The before reads AI; the after reads written.
+
+## 11. Confidence notes
+
+This is a baseline, not a fingerprint. It will produce text that reads human but doesn't read like any specific human. That's the design — when the user wants a specific person, they should profile that person and use _their_ profile.
+
+If output from this profile feels too neutral or generic for the task, the right fix is more context (audience, register, format) rather than adding manufactured quirks. The skill of using this profile well is in trusting variability and avoiding LLM-isms, not in adding flavor.
+
+## Changelog
+
+- Built-in. Created as part of the ghostwriter skill default set, adapted from the methodology of [blader/humanizer](https://github.com/blader/humanizer) (MIT).
