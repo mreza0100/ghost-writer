@@ -1,5 +1,7 @@
 # Ghostwriter
 
+**Version:** 1.0.0 · **License:** MIT · **Repo:** [github.com/mreza0100/ghost-writer](https://github.com/mreza0100/ghost-writer)
+
 A Claude Code skill that captures how someone writes — across four layers: the mechanical fingerprint (sentence rhythm, punctuation density, formatting quirks), the cognitive moves (how they frame problems, what they refuse, where they concretize, how they shape conclusions), the rhetorical structure (the essay-scale shape: opening pattern, full argument arc, scale-shifts, example-texture mix, reference horizon, self-reference patterns, term-coining, aphorism placement), and the vocabulary fingerprint (the specific words they reach for when alternatives exist) — from a corpus of their writing, and generates new text that reproduces all four layers.
 
 This is not persona imitation. It doesn't try to capture worldview, opinions, or vibe. It reads observable, measurable, quotable patterns at four levels and reproduces them at the documented densities. The result is auditable: every rule in a profile has at least one quoted example from the source corpus, classified by type and rated by confidence.
@@ -254,6 +256,23 @@ The single highest-leverage section is the synonym-binaries table. Applying thos
 - Vocabulary-fingerprint methodology draws on classical stylometry (function-word frequency, type-token ratio, lexical attribution)
 - Audit framework (4-bucket drift report) from McFarland's voice plugin methodology
 - Four-layer framing (mechanics + cognitive moves + rhetorical structure + vocabulary) — own synthesis, bridging Dumont's pure-mechanics approach and McFarland's pure-persona approach. The rhetorical-structure layer was added after profiling Paul Graham and noticing that mechanics + vocabulary + cognitive moves captured the sentences but missed the macro shape that makes a PG essay a PG essay.
+
+## Updating
+
+Compare the `version` field in your installed `SKILL.md` frontmatter against the repo's latest:
+
+```bash
+cd /path/to/ghost-writer-repo && git pull
+
+# Core skill
+cp SKILL.md /your/project/.claude/skills/ghostwriter/SKILL.md
+
+# References (check for new files)
+cp references/*.md /your/project/.claude/skills/ghostwriter/references/
+
+# Profiles (human.md gets updated; your custom profiles are untouched)
+cp profiles/human.md /your/project/.claude/skills/ghostwriter/profiles/
+```
 
 ## License
 

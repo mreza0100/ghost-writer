@@ -1,5 +1,7 @@
 ---
 name: ghostwriter
+version: "1.0.0"
+repo: "https://github.com/mreza0100/ghost-writer"
 description: Use when the user wants to extract a reusable writing-style profile from a corpus, generate text in a specific person's style, audit or update an existing voice profile, or humanize AI-sounding text via the bundled human profile. Trigger on phrases like "match my writing style", "write like this", "make it sound like me", "voice profile", "voice DNA", "audit/update my style profile", or when the user pastes a substantial sample and asks for new text in the same voice. Do not use for generic copyediting, grammar cleanup, or broad tone shifts; this skill is for evidence-grounded reproduction of a writer's mechanical fingerprint, cognitive moves, rhetorical structure, and vocabulary.
 ---
 
@@ -636,3 +638,30 @@ Triggered by: a Mode C drift report, Mode A.5 calibration feedback, or fresh use
 - **Profile passed in but parts conflict with the new sample.** Flag the conflict; ask which to honor. Don't silently override.
 - **Sample contains AI-generated text.** Detection cues in `references/llm-isms.md`. Verify with the user before encoding any of them as voice. Encoding LLM tells as personal voice is the worst possible failure of this skill.
 - **Writer's voice in conflict / pushback is missing from corpus.** Most corpora bias toward neutral writing; the writer in disagreement is often invisible. If the user will need the profile for adversarial writing (debates, complaints, refutations), ask for at least one piece of that kind — or flag the gap explicitly in Confidence notes.
+
+---
+
+## Version & Updates
+
+**Current version:** 1.0.0
+**Repository:** https://github.com/mreza0100/ghost-writer
+
+To check for updates, compare the `version` field in your installed SKILL.md frontmatter against the latest in the repository.
+
+**To update:**
+
+```bash
+cd /path/to/ghost-writer-repo && git pull
+
+# Copy core skill file
+cp SKILL.md /your/project/.claude/skills/ghostwriter/SKILL.md
+
+# Copy reference files (check for new ones)
+cp references/*.md /your/project/.claude/skills/ghostwriter/references/
+
+# Copy updated profiles
+cp profiles/human.md /your/project/.claude/skills/ghostwriter/profiles/
+```
+
+**Changelog:**
+- **1.0.0** — First versioned release. Four-layer architecture (mechanical + cognitive moves + rhetorical structure + vocabulary fingerprint). Five modes (A/A.5/B/C/D). Built-in human profile. Paul Graham profile included.
