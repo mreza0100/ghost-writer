@@ -14,8 +14,9 @@ The corpus is the **source of truth**. Every rule comes from the corpus, not fro
 Read these when the situation calls for them. Don't try to keep them all in working memory.
 
 - `references/llm-isms.md` — 29-pattern catalog of LLM-tells. Used during Mode A (corpus sanity-check), Mode A.5 (canonical definition of the `LLM_ISM` tag), and Mode B (pre-delivery self-check).
-- `references/extraction-checklist.md` — corpus preparation rules and the 8-dimension extraction grid. Read before starting Mode A.
+- `references/extraction-checklist.md` — corpus preparation rules and the 8-dimension mechanical extraction grid. Read before starting Mode A.
 - `references/cognitive-moves.md` — extraction prompts and categories for the upstream layer (framing, reasoning, concretization, rejections, conclusion shape, audience assumptions, argument shape). Read before extracting any non-trivial profile; read again when generating in Mode B.
+- `references/vocabulary-fingerprint.md` — the lexical layer: verb preferences, hedge vocabulary, intensifiers, synonym binaries, casualism markers, sentence-final and topic-shift vocabulary. Read during Mode A vocabulary extraction; read again during Mode B drafting. This is where classical stylometry's identifying signal lives.
 
 ## What this skill is, and isn't
 
@@ -26,7 +27,7 @@ This skill captures two layers from a corpus and reproduces them in new text:
 
 Both layers must be evidence-grounded. Every rule, mechanical or cognitive, requires at least two quoted instances from the corpus.
 
-This skill is _not_ a persona-direction skill. It does not capture worldview, opinions, values, beliefs, or vibe descriptors ("warm", "snarky", "earnest"). Those are downstream of cognitive moves and they read fake when ported into a different context. The distinction matters: a cognitive move is "reflexively asks 'compared to what?' before accepting a comparison" — observable in two quoted moments. A vibe descriptor is "is skeptical" — a label, not a move. The move is in scope; the label is not.
+This skill is *not* a persona-direction skill. It does not capture worldview, opinions, values, beliefs, or vibe descriptors ("warm", "snarky", "earnest"). Those are downstream of cognitive moves and they read fake when ported into a different context. The distinction matters: a cognitive move is "reflexively asks 'compared to what?' before accepting a comparison" — observable in two quoted moments. A vibe descriptor is "is skeptical" — a label, not a move. The move is in scope; the label is not.
 
 This split — mechanics + moves but no persona — is a deliberate position. McFarland's voice plugin argues that pure mechanics produce monotonous output and prefers persona; Dumont's argues for pure mechanics. The cognitive-moves layer is the bridge: the upstream layer that shapes word assembly, while staying as auditable as the mechanics. If output still feels off after both layers are dialed in, the gap is genuinely in persona, and the user should pair this skill with a separate persona prompt.
 
@@ -49,11 +50,11 @@ If the user gives a sample and asks for new text in one go, do A then B. If they
 One profile ships with the skill. It lives at `profiles/human.md` and is the default fallback.
 
 - **`human`** — the **negative profile**. Instead of capturing one writer's fingerprint, it bans the full 29-pattern LLM-ism catalog (see `references/llm-isms.md`) and sets human-typical density ranges (burstiness σ ≥ 7, em-dash ≤ 3/1000w, no rule-of-three lists, etc.). Use it when:
-     - The user asks to "humanize" some AI-sounding text — no specific writer involved, just remove the tells.
-     - The user wants generic-but-human writing and hasn't profiled anyone yet.
-     - A specific person's profile is too thin to use confidently — fall back to `human` and prompt for more samples.
+  - The user asks to "humanize" some AI-sounding text — no specific writer involved, just remove the tells.
+  - The user wants generic-but-human writing and hasn't profiled anyone yet.
+  - A specific person's profile is too thin to use confidently — fall back to `human` and prompt for more samples.
 
-This is a different _kind_ of profile from a person profile — it has no pet phrases, no fingerprint to reproduce, no signature moves. The whole point is the absence of identifiable patterns plus the LLM-tell ban list. Treat it as the floor: any person profile should at least clear what `human` clears, and add a fingerprint on top.
+This is a different *kind* of profile from a person profile — it has no pet phrases, no fingerprint to reproduce, no signature moves. The whole point is the absence of identifiable patterns plus the LLM-tell ban list. Treat it as the floor: any person profile should at least clear what `human` clears, and add a fingerprint on top.
 
 Don't run Mode A.5 (calibration) or Mode C (audit) on `human` — there's no source corpus to drift from. Mode B is the only mode that meaningfully applies.
 
@@ -69,7 +70,7 @@ The alternative — a confident-sounding profile of generic "good writing" rules
 
 ### Density, not presence
 
-For every recurring quirk, capture **the rate**. "Em-dashes ~3/1000w", not "uses em-dashes". "Sentence fragments ~1 in 12 sentences", not "uses fragments". When generating, match the _rate_ the writer actually uses — caricature is the failure mode of presence rules.
+For every recurring quirk, capture **the rate**. "Em-dashes ~3/1000w", not "uses em-dashes". "Sentence fragments ~1 in 12 sentences", not "uses fragments". When generating, match the *rate* the writer actually uses — caricature is the failure mode of presence rules.
 
 ### VOICE vs PLATFORM vs BORDERLINE
 
@@ -85,13 +86,13 @@ If you encode platform conventions as personal voice, the imitation will read fi
 
 - **Opinions, beliefs, values.** "Believes in transparency." "Pro-open-source." These are downstream of cognitive moves and read fake when ported.
 - **Subject matter / topics.** A corpus about cooking → "writes about food" is not a style rule.
-- **Voice / tone / personality descriptors** ("warm", "snarky", "earnest", "thoughtful", "contrarian"). Subjective labels. The cognitive-moves layer captures the _moves_ that produce these impressions, with quotes; the labels themselves are out.
+- **Voice / tone / personality descriptors** ("warm", "snarky", "earnest", "thoughtful", "contrarian"). Subjective labels. The cognitive-moves layer captures the *moves* that produce these impressions, with quotes; the labels themselves are out.
 - **Coarse cognitive archetypes** ("thinks like an engineer", "approaches things like a journalist"). Too broad to be useful; quote specific moves instead.
-- **Generic good-writing or good-thinking virtues** ("uses active voice", "considers counterarguments"). Only include if the corpus shows them as _distinctively_ present, with numbers or two quoted instances.
+- **Generic good-writing or good-thinking virtues** ("uses active voice", "considers counterarguments"). Only include if the corpus shows them as *distinctively* present, with numbers or two quoted instances.
 - **Platform conventions** confused as personal voice.
 - **LLM-isms in the corpus.** If the corpus has clusters of patterns from `references/llm-isms.md`, verify with the user before encoding any of them.
 
-The line between an in-scope cognitive move and an out-of-scope vibe descriptor is the evidence rule: a move is something you can quote two distinct instances of. A vibe descriptor is something you'd have to _argue_ the writer demonstrates. If you're arguing, it's not in scope.
+The line between an in-scope cognitive move and an out-of-scope vibe descriptor is the evidence rule: a move is something you can quote two distinct instances of. A vibe descriptor is something you'd have to *argue* the writer demonstrates. If you're arguing, it's not in scope.
 
 ---
 
@@ -107,7 +108,7 @@ Read `references/extraction-checklist.md` for the full corpus rules. The short v
 - **Length variety:** include short and long pieces.
 - **Single author:** all samples written by the person being profiled.
 
-If the corpus fails any rule, say so explicitly in the profile's _Confidence notes_. A tentative profile from a thin corpus is honest; a confident one is a lie.
+If the corpus fails any rule, say so explicitly in the profile's *Confidence notes*. A tentative profile from a thin corpus is honest; a confident one is a lie.
 
 ### Step 2: Read along the 8 mechanical dimensions
 
@@ -118,6 +119,14 @@ Run through the dimensions in `references/extraction-checklist.md`: sentence pat
 Run through the categories in `references/cognitive-moves.md`: framing moves, reasoning moves, concretization tendencies, reflexive rejections, conclusion shape, audience assumptions, argument shape. Use the extraction prompts at the end of that file — they surface moves that a one-pass mechanical read misses.
 
 Apply the same evidence discipline as the mechanical layer: a cognitive move is only a rule if you can quote two distinct moments from the corpus where the writer demonstrably uses it. If you'd have to argue the move is present, it isn't a rule.
+
+### Step 2c: Extract the vocabulary fingerprint
+
+Run through the 12 categories in `references/vocabulary-fingerprint.md`: top content lexicon, function-word patterns, verb preferences, hedge vocabulary, intensifiers, synonym binaries, casualism markers, profanity, sentence-final vocabulary, topic-shift vocabulary, question vocabulary, and lexical banned-by-omission.
+
+Use the 12 extraction prompts at the end of that file. The single highest-leverage section is **5.6 Synonym binaries** — when the writer had a choice between two common alternatives (use/utilize, help/assist, but/however, weird/strange), which side did they pick consistently? Aim for 8–15 binaries from a substantive corpus. Applying these during generation is one of the fastest ways to make output sound like the writer.
+
+For thinner corpora (<5000 words OR <10 pieces), do the abridged extraction described in that file — skip top-N frequency tables, keep verb preferences, hedges, synonym binaries, casualisms, topic-shift, and pet phrases.
 
 ### Step 3: Compute the quantitative layer
 
@@ -173,47 +182,40 @@ When imitating a writer's style, the failure mode is exaggerating one-time patte
 
 ## 3. Cognitive moves & frames
 
-The repeatable operations the writer performs on an idea before assembling words. Position matters: these rules sit above the mechanical sections because they shape _what_ gets assembled, not just how. See `references/cognitive-moves.md` for the extraction methodology. Each rule below has two quoted instances and a move-type classification.
+The repeatable operations the writer performs on an idea before assembling words. Position matters: these rules sit above the mechanical sections because they shape *what* gets assembled, not just how. See `references/cognitive-moves.md` for the extraction methodology. Each rule below has two quoted instances and a move-type classification.
 
 ### Framing moves
-
 - [VOICE | high] <Move>. Type: <reframe / reject / steelman / concretize / zoom-out / reduce>. Instances:
-     - "<quote 1 with brief context>"
-     - "<quote 2 with brief context>"
+  - "<quote 1 with brief context>"
+  - "<quote 2 with brief context>"
 
 ### Reasoning moves
-
 - [VOICE | medium] <Move>. Type: <counterexample / comparison / inversion / incentives / falsification / data / mechanism / constraint>. Instances:
-     - "<quote 1>"
-     - "<quote 2>"
+  - "<quote 1>"
+  - "<quote 2>"
 
 ### Concretization tendencies
-
 - [VOICE | high] <Pattern, with density e.g., "every abstract claim paired with a numbered example, 4 of 4 pieces">. Instances:
-     - "<quote 1>"
-     - "<quote 2>"
+  - "<quote 1>"
+  - "<quote 2>"
 
 ### Reflexive rejections (things the writer demonstrably refuses)
-
 - [VOICE | high] <Refusal>. Two cases where the writer had the option and didn't take it:
-     - "<context 1>"
-     - "<context 2>"
+  - "<context 1>"
+  - "<context 2>"
 
 ### Shape of conclusion
-
 - [VOICE | high] <Shape>. Type: <action / open-question / compression / hedge / cut-off>. Closing sentences from two pieces:
-     - "<closing 1>"
-     - "<closing 2>"
+  - "<closing 1>"
+  - "<closing 2>"
 
 ### Audience assumptions
-
 - [VOICE | medium] <What the writer doesn't explain that they could>. Evidence: <a technical term used without definition, a reference dropped without context, etc.>
 
 ### Argument shape
-
 - [VOICE | high] <Shape>. Type: <stair-step / story-moral / thesis-first / inquiry / empirical / argumentative>. Two pieces showing it:
-     - <how piece 1 is structured>
-     - <how piece 2 is structured>
+  - <how piece 1 is structured>
+  - <how piece 2 is structured>
 
 ## 4. Quantitative layer
 
@@ -226,12 +228,60 @@ The repeatable operations the writer performs on an idea before assembling words
 - Exclamation rate / 1000w: <N>
 - Top sentence-initial connectors: "<x>" (Nx), "<y>" (Nx), "<z>" (Nx)
 
-## 5. Vocabulary & word choice
+## 5. Vocabulary fingerprint
 
-- [VOICE | high] <Rule, with rate>. Example: "<short quote>"
-- [VOICE | medium] <Rule>. Example: "<short quote>"
-- [PLATFORM] <Medium-driven rule>. Example: "<short quote>"
-- Pet phrases recurring verbatim: "<phrase>" (Nx), "<phrase>" (Nx)
+The lexical layer — the specific words the writer reaches for when alternatives exist. See `references/vocabulary-fingerprint.md` for extraction methodology. Use the full structure below for substantive corpora (≥5000 words AND ≥10 pieces); for thinner corpora keep sections 5.3, 5.4, 5.6, 5.7, 5.10, and pet phrases, and skip the frequency tables in 5.1 and 5.2.
+
+### 5.1 Top content lexicon
+- Top content words (excluding stopwords; 30 for substantive corpora, 15 for thinner):
+  "<word>" (Nx), "<word>" (Nx), …
+- Words that travel across pieces (voice, not topic): "<word>", "<word>"
+
+### 5.2 Function-word patterns
+- Standout function-word patterns: "<observation, e.g., 'but' outranks 'however' 12:1>"
+- Pronoun preferences: I/we/you ratios if distinctive.
+
+### 5.3 Verb preferences
+- Top 20 verbs by frequency.
+- Plain-to-elevated ratio: <e.g., "85% plain (use, make, do); 1 'utilize' in 8000 words">
+- Identifying verb picks: "<verb>" over "<alternative>" — Nx in corpus.
+
+### 5.4 Hedge vocabulary
+- Top hedges with counts: "<hedge>" (Nx), "<hedge>" (Nx)
+- Hedges the writer demonstrably avoids: "<hedge>"
+
+### 5.5 Intensifier vocabulary
+- Top intensifiers with counts: "<word>" (Nx)
+- Intensifiers avoided: "<word>"
+
+### 5.6 Synonym binaries (the diagnostic table)
+- <plain> / <elevated> → uses "<plain>" (Nx vs Nx)
+- [list 8–15 binaries observed in the corpus]
+
+### 5.7 Casualism / internet markers
+- (If present) "<marker>" at <density>
+- (If absent — consistently formal register) Note explicitly: no casualism markers observed.
+
+### 5.8 Profanity
+- Rate and specific words, OR explicit "no profanity in corpus."
+
+### 5.9 Sentence-final vocabulary
+- Dominant shape: <hedge-end / concrete-end / intensifier-end / mixed>
+- Sample endings from corpus.
+
+### 5.10 Topic-shift vocabulary
+- Most-used topic-shift word: "<word>" (Nx)
+- Other shifts observed, or: no consistent topic-shift word.
+
+### 5.11 Question vocabulary
+- Dominant question shape: "<shape>"
+- Sample questions from corpus.
+
+### 5.12 Banned-by-omission (lexical)
+- Words the writer demonstrably avoids at the lexical level: "<word>", "<word>"
+
+### Pet phrases (multi-word recurring units)
+- "<phrase>" (Nx), "<phrase>" (Nx)
 
 ## 6. Sentence structure & rhythm
 
@@ -252,7 +302,6 @@ The repeatable operations the writer performs on an idea before assembling words
 ## 9. Default mode
 
 The writer's default register when context isn't specified. Pick one:
-
 - **Informational** — direct, factual, no narrative arc. Shorter, punchier. Set this as default if Slack/email/chat dominates the corpus.
 - **Narrative** — story arcs, scene-setting, build-up. Longer paragraphs. Set this as default if blog posts / long-form dominates.
 - **Mixed** — switches by format. Note which format gets which.
@@ -295,18 +344,18 @@ Extraction misses things humans only notice in fresh output. Run this every time
 
 1. Generate **3 short calibration samples** in the new style — one per most-likely-use format (e.g., blog opener + email reply + Slack message). Show them in chat.
 2. Ask the user to mark each issue with a tag:
-      - `WRONG` — this rule is wrong; the writer doesn't actually do this
-      - `OVERSTATED` — direction right, density too high
-      - `UNDERSTATED` — present but weaker than reality; bump it up
-      - `MISSING` — a real pattern the profile doesn't capture
-      - `NEEDS_NUANCE` — true sometimes, not always; condition it
-      - `LLM_ISM` — sounds like default-Claude voice leaking through (cross-reference `references/llm-isms.md` to identify which pattern)
-      - `NOT_ME` — whole sample feels off; can't articulate why
+   - `WRONG` — this rule is wrong; the writer doesn't actually do this
+   - `OVERSTATED` — direction right, density too high
+   - `UNDERSTATED` — present but weaker than reality; bump it up
+   - `MISSING` — a real pattern the profile doesn't capture
+   - `NEEDS_NUANCE` — true sometimes, not always; condition it
+   - `LLM_ISM` — sounds like default-Claude voice leaking through (cross-reference `references/llm-isms.md` to identify which pattern)
+   - `NOT_ME` — whole sample feels off; can't articulate why
 3. Apply the tagged feedback. Mapping:
-      - `WRONG / OVERSTATED / UNDERSTATED / NEEDS_NUANCE` → revise the rule's density or condition.
-      - `MISSING` → add a new rule, with the example the user provides as evidence.
-      - `LLM_ISM` → identify the catalog pattern in `llm-isms.md`, add it to Section 1 (banned).
-      - `NOT_ME` → re-run extraction. Likely a structural miss in the 8 dimensions.
+   - `WRONG / OVERSTATED / UNDERSTATED / NEEDS_NUANCE` → revise the rule's density or condition.
+   - `MISSING` → add a new rule, with the example the user provides as evidence.
+   - `LLM_ISM` → identify the catalog pattern in `llm-isms.md`, add it to Section 1 (banned).
+   - `NOT_ME` → re-run extraction. Likely a structural miss in the 8 dimensions.
 4. Log the change in the changelog. Re-render calibration samples once. Stop after one revision unless the user wants another pass — convergence, not perfection.
 
 Dumont reports his profile grew 333 → 510 lines through three calibration rounds. Most of the growth was rules the automated extraction missed because they only become visible in fresh output.
@@ -330,9 +379,9 @@ Both follow the same steps below; the only difference is whether you're starting
 
 ### Steps
 
-1. **Read the profile top-down.** Order matters. Banned words and anti-performative rules go first because they shape every following generation choice. The **cognitive moves** section (Section 3) comes next because it shapes _how the writer would approach this specific topic_ — which is upstream of word choice and sentence shape.
+1. **Read the profile top-down.** Order matters. Banned words and anti-performative rules go first because they shape every following generation choice. The **cognitive moves** section (Section 3) comes next because it shapes *how the writer would approach this specific topic* — which is upstream of word choice and sentence shape. The **vocabulary fingerprint** (Section 5) comes after — especially Section 5.6 (synonym binaries) and 5.4 (hedges). Internalize the writer's specific verb and hedge picks before drafting, because Claude's defaults will otherwise win every micro-choice.
 2. If the input is existing text (humanize), read it once for content, once for which LLM-isms it contains (cross-reference `references/llm-isms.md`). Plan the rewrite at the paragraph level, not the sentence level — wholesale restructuring usually beats find-and-replace.
-3. **Apply the cognitive moves to the topic before drafting words.** This is the step most likely to be skipped — don't skip it. Ask: how would this writer frame this question? What would they refuse to accept about it? Where would they concretize? What shape would their argument take? What would the conclusion look like? Do those operations first, mentally. _Then_ draft.
+3. **Apply the cognitive moves to the topic before drafting words.** This is the step most likely to be skipped — don't skip it. Ask: how would this writer frame this question? What would they refuse to accept about it? Where would they concretize? What shape would their argument take? What would the conclusion look like? Do those operations first, mentally. *Then* draft.
 4. Check the **priority hierarchy** (next section). Conventions of the writing context (legal, academic, regulated) can override the profile.
 5. Draft (or rewrite). Reproduce profile rules at documented densities. Match densities; don't crank. For the `human` profile especially, **vary sentence length aggressively** — burstiness σ ≥ 7 is the single most important target.
 6. Run the **three-pass self-review** before delivering.
@@ -357,7 +406,13 @@ Three different failure modes. A single pass catches one and misses the others �
 
 **Pass 2 — Performative scan.** Look at every place the draft has a "signature move" — a quirk applied loudly. Check the profile's anti-performative rules in Section 2: is this move actually high-density in the corpus, or did you crank a one-time tic into a catchphrase? If cranked, dial it down. The smell test: would the writer's friend roll their eyes reading this?
 
-**Pass 3 — Moves pass.** Read the draft _for the thinking_, ignoring the words. Did it apply the writer's characteristic cognitive moves (Section 3 of the profile)? Or did default-Claude reasoning sneak in — survey 5 angles neutrally, balance both sides, "while X has its merits, Y also has its strengths", land on a synthesis no one asked for, conclude with generic uplift? Common leaks to look for: the writer always concretizes but your draft stayed abstract; the writer reflexively asks "compared to what?" but your draft accepted a comparison at face value; the writer's conclusion shape is "specific action item" but your draft ended in "exciting times ahead." If the mechanics are right but the thinking reads like a committee, fix the thinking. This pass is the one most often skipped and the one that, when skipped, produces "mechanically right, conceptually a stranger" prose.
+**Pass 3 — Moves and vocabulary pass.** Two checks in one read.
+
+*Moves sub-pass.* Read the draft *for the thinking*, ignoring the words. Did it apply the writer's characteristic cognitive moves (Section 3 of the profile)? Or did default-Claude reasoning sneak in — survey 5 angles neutrally, balance both sides, "while X has its merits, Y also has its strengths", land on a synthesis no one asked for, conclude with generic uplift? Common leaks: the writer always concretizes but your draft stayed abstract; the writer reflexively asks "compared to what?" but your draft accepted a comparison at face value; the writer's conclusion shape is "specific action item" but your draft ended in "exciting times ahead." If the mechanics are right but the thinking reads like a committee, fix the thinking.
+
+*Vocabulary sub-pass.* Now scan the *words*. Walk the draft and check: does each verb match the writer's plain-vs-elevated profile (Section 5.3)? Did the hedges and intensifiers come from the writer's lists (Sections 5.4–5.5), or did Claude defaults ("perhaps", "potentially", "arguably", "quite") sneak in? Are the synonym binaries (Section 5.6) being respected — "use" not "utilize", "but" not "however" if those were the writer's picks? Is casualism density right? Did the writer's topic-shift word appear at paragraph breaks, or default-LLM transitions? The single most common vocabulary failure: Claude reaches for the elevated synonym when the writer always picks the plain one. Fix any binary inversions before delivering.
+
+Combined, this pass is the one most often skipped and the one that, when skipped, produces "mechanically right, conceptually a stranger" prose — or "thinking right, but worded by someone else."
 
 ### Common failure modes
 
@@ -375,21 +430,20 @@ End the response with:
 
 ```markdown
 ---
-
 **Profile used:** `<profile name>` (e.g., `human` default, or `<person>`)
 **Operation:** generate | humanize
 
 **Rules applied (top hits):**
-
 - <Rule>: <how reproduced, with target density if relevant>
 - <Rule>: <how reproduced>
 - ...
 
 **Self-review:**
-
 - LLM-ism pass: <patterns found and removed, OR "none flagged">
 - Performative pass: <quirks dialed back, OR "no cranking detected">
-- Moves pass: <how the writer's cognitive moves shaped this draft — e.g., "applied reframe + concretization + action-item conclusion" — OR "no specific cognitive moves applied (human profile)">
+- Moves and vocabulary pass:
+  - Moves: <how the writer's cognitive moves shaped this draft — e.g., "applied reframe + concretization + action-item conclusion" — OR "no specific cognitive moves applied (human profile)">
+  - Vocabulary: <synonym binaries applied, hedges/intensifiers matched, OR "lexical fingerprint not yet captured / using human profile defaults">
 
 **Trade-offs:** <if priority hierarchy kicked in, mention briefly. Otherwise omit.>
 ```
@@ -411,36 +465,29 @@ Use when the user has an existing profile and wants to know if it still fits how
 
 ```markdown
 # Drift Report: <profile name>
-
 Compared profile dated <YYYY-MM-DD> against <N> recent pieces (~<word count>).
 
 ## Numbers, then vs. now
-
-| Metric              | Profile | Recent | Δ   |
-| ------------------- | ------- | ------ | --- |
-| Avg sentence length | ...     | ...    | ... |
-| Burstiness (σ)      | ...     | ...    | ... |
-| Em-dashes / 1000w   | ...     | ...    | ... |
-| ...                 |         |        |     |
+| Metric | Profile | Recent | Δ |
+|---|---|---|---|
+| Avg sentence length | ... | ... | ... |
+| Burstiness (σ) | ... | ... | ... |
+| Em-dashes / 1000w | ... | ... | ... |
+| ... | | | |
 
 ## Strong (rules that still hold confidently)
-
 - <Rule>. Recent example: "<quote>"
 
 ## Thin (rules with weakening evidence)
-
 - <Rule>. Profile rated [high]; recent corpus shows it [medium] or absent. Recent counter-example: "<quote>"
 
 ## Missing (new patterns in recent corpus, not yet in profile)
-
 - <Rule>. Recent example: "<quote>"
 
 ## Fix (rules that have decayed or shifted, with proposed edit)
-
 - <Rule>. Profile says X; recent corpus shows Y. Proposed: <revised rule>.
 
 ## Recommendation
-
 - <Update / no update needed / partial update with these specific edits>
 ```
 

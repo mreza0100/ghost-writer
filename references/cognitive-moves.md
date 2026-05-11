@@ -1,6 +1,6 @@
 # Cognitive Moves & Frames
 
-A reference used during Mode A (extract) to capture the layer upstream of mechanics: the repeatable things the writer _does_ to an idea before they put words on it. Mechanics shape word assembly; cognitive moves shape what gets assembled in the first place.
+A reference used during Mode A (extract) to capture the layer upstream of mechanics: the repeatable things the writer *does* to an idea before they put words on it. Mechanics shape word assembly; cognitive moves shape what gets assembled in the first place.
 
 Read this file when extracting any non-trivial profile, and again when generating in Mode B. The mechanical layer alone is not enough — two writers with identical punctuation densities can produce completely different prose if one always asks "compared to what?" and the other always asks "what would change my mind?"
 
@@ -17,14 +17,14 @@ These keep getting smuggled in. They don't belong:
 - **Opinions, beliefs, or values.** "Believes in transparency." "Pro-open-source." These are downstream of moves, not moves themselves, and they read fake when ported to a different context.
 - **Vibe descriptors.** "Snarky." "Earnest." "Thoughtful." "Contrarian." Subjective, untestable, and they trigger Claude's default-persona generation, not the writer's actual reasoning.
 - **Topics and interests.** What the writer writes about is not how they think about it.
-- **Generic good-thinking virtues.** "Uses evidence." "Considers counterarguments." Unless the writer specifically does this at a _distinctive_ level — and you can quote it — it's not a rule, it's a compliment.
+- **Generic good-thinking virtues.** "Uses evidence." "Considers counterarguments." Unless the writer specifically does this at a *distinctive* level — and you can quote it — it's not a rule, it's a compliment.
 - **Persona archetypes.** "Engineer mindset." "Lawyer mindset." "Journalist mindset." Too coarse to be useful; quote the specific moves instead.
 
 If you find yourself writing a cognitive-move rule that you can't ground in two specific quoted moments from the corpus, drop it.
 
 ## Categories to scan for
 
-These are the dimensions to read along. Treat each independently. For each, look for moves the writer makes _repeatedly_ across different topics. Capture: the move, two quoted instances, density (roughly how often it shows up), and VOICE / PLATFORM / BORDERLINE classification.
+These are the dimensions to read along. Treat each independently. For each, look for moves the writer makes *repeatedly* across different topics. Capture: the move, two quoted instances, density (roughly how often it shows up), and VOICE / PLATFORM / BORDERLINE classification.
 
 ### 1. Framing moves
 
@@ -76,7 +76,7 @@ Some of the most distinctive cognitive fingerprints are negative — moves the w
 - Refuses hedges that don't survive ("it could potentially possibly").
 - Refuses scope creep — names what's out of scope explicitly.
 
-These are observable as absences in the corpus, the same way "0 semicolons in 1200 words" is observable. Use the same evidence rule: at least two cases where the writer clearly _had the option_ and refused.
+These are observable as absences in the corpus, the same way "0 semicolons in 1200 words" is observable. Use the same evidence rule: at least two cases where the writer clearly *had the option* and refused.
 
 ### 5. Shape of conclusion
 
@@ -138,44 +138,37 @@ Add as Section 3 to the profile (between Anti-performative rules and Quantitativ
 The repeatable things this writer does to an idea before assembling words. Each rule has two quoted instances from the corpus and is classified as a move type.
 
 ### Framing moves
-
 - [VOICE | high] <Move>. Type: <reframe / reject / steelman / concretize / zoom-out / reduce>. Instances:
-     - "<quote 1 with brief context>"
-     - "<quote 2 with brief context>"
+  - "<quote 1 with brief context>"
+  - "<quote 2 with brief context>"
 
 ### Reasoning moves
-
 - [VOICE | medium] <Move>. Type: <counterexample / comparison / inversion / incentives / falsification / data / mechanism / constraint>. Instances:
-     - "<quote 1>"
-     - "<quote 2>"
+  - "<quote 1>"
+  - "<quote 2>"
 
 ### Concretization tendencies
-
 - [VOICE | high] <Pattern>. Density: <e.g., "every abstract claim paired with a numbered example, 4 of 4 pieces">. Instances:
-     - "<quote 1>"
-     - "<quote 2>"
+  - "<quote 1>"
+  - "<quote 2>"
 
 ### Reflexive rejections
-
 - [VOICE | high] <Refusal>. Instances of refusal:
-     - "<context 1: writer had the option and didn't take it>"
-     - "<context 2>"
+  - "<context 1: writer had the option and didn't take it>"
+  - "<context 2>"
 
 ### Shape of conclusion
-
 - [VOICE | high] <Shape>. Type: <action / open question / compression / hedge / cut-off / generic-uplift>. Instances:
-     - "<closing sentence of piece 1>"
-     - "<closing sentence of piece 2>"
+  - "<closing sentence of piece 1>"
+  - "<closing sentence of piece 2>"
 
 ### Audience assumptions
-
 - [VOICE | medium] <Assumption>. Evidence: <what the writer doesn't explain that they could>.
 
 ### Argument shape
-
 - [VOICE | high] <Shape>. Type: <stair-step / story-moral / thesis-first / inquiry / empirical / argumentative>. Instances:
-     - <how piece 1 is structured>
-     - <how piece 2 is structured>
+  - <how piece 1 is structured>
+  - <how piece 2 is structured>
 ```
 
 ## How this gets used in Mode B
@@ -183,7 +176,7 @@ The repeatable things this writer does to an idea before assembling words. Each 
 When generating, the cognitive-moves section is consulted alongside the mechanical sections, but earlier in the process. Read order matters:
 
 1. Read banned-words and anti-performative rules first (they shape what cannot appear).
-2. Read cognitive moves next (they shape _how the writer would approach this specific topic_).
+2. Read cognitive moves next (they shape *how the writer would approach this specific topic*).
 3. Then approach the topic. Don't draft prose yet — first do the moves the writer would do. Reframe the question if they reframe. Concretize if they concretize. Identify what they would refuse to accept.
 4. Now draft, applying mechanics.
 5. Self-review includes a "moves pass" — did the draft apply the writer's characteristic moves, or did default-Claude reasoning sneak in?
@@ -192,8 +185,8 @@ The order is the point. If you apply cognitive moves after drafting, you're just
 
 ## Common failure modes
 
-- **Importing opinions.** If the writer disagreed with X in the corpus, that's not a rule to encode. The rule is _how_ they handle disagreement (steelman first? direct attack?), not _what_ they disagreed about.
+- **Importing opinions.** If the writer disagreed with X in the corpus, that's not a rule to encode. The rule is *how* they handle disagreement (steelman first? direct attack?), not *what* they disagreed about.
 - **Coarse archetypes.** "Thinks like an engineer." Useless. Quote the specific move: "always reduces to the simplest case that still has the same problem; e.g., 'forget the whole system, just imagine one user'."
 - **Reading moves into the text.** If you have to argue that a move is present, it isn't. The corpus should make the moves obvious on a careful read.
 - **Default-Claude moves leaking in.** When you draft, your default cognitive moves are "consider both sides equally," "list 5 considerations," "synthesize neutrally." If the writer doesn't do these, your output will read like the writer's voice committee-thinking. Watch for it in the moves pass.
-- **Persona invention via the back door.** This layer is _not_ where you slip in worldview. If a rule starts to sound like a belief, drop it or quote it.
+- **Persona invention via the back door.** This layer is *not* where you slip in worldview. If a rule starts to sound like a belief, drop it or quote it.
