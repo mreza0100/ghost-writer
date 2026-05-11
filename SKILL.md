@@ -15,12 +15,22 @@ Read these when the situation calls for them. Don't try to keep them all in work
 
 - `references/llm-isms.md` — 29-pattern catalog of LLM-tells. Used during Mode A (corpus sanity-check), Mode A.5 (canonical definition of the `LLM_ISM` tag), and Mode B (pre-delivery self-check).
 - `references/extraction-checklist.md` — corpus preparation rules and the 8-dimension extraction grid. Read before starting Mode A.
+- `references/cognitive-moves.md` — extraction prompts and categories for the upstream layer (framing, reasoning, concretization, rejections, conclusion shape, audience assumptions, argument shape). Read before extracting any non-trivial profile; read again when generating in Mode B.
 
 ## What this skill is, and isn't
 
-This is a **mechanical-fingerprint** skill. It reads observable patterns — pet phrases, sentence shapes, punctuation rates — and reproduces them. It is _not_ a persona-direction skill: it doesn't try to capture worldview, opinions, or vibe. Persona-driven imitation often reads livelier but is harder to verify; mechanics are auditable but can read flat alone. If the user wants both, pair this skill with a separate persona/voice-direction prompt; flag the trade-off when it matters (e.g., the user says "this still doesn't _sound_ like me" after the mechanics are right). This split is real — McFarland's voice plugin argues against pure mechanics; Dumont's argues for them. Both have a point.
+This skill captures two layers from a corpus and reproduces them in new text:
 
-Voice also doesn't operate alone. In a content-creator setting, voice is one axis of a triple: voice (how it sounds) + audience (who it's for) + business context (what it's selling or building toward). This skill owns voice. If the user needs the other two, point them at separate ICP and business-profile work.
+1. **The mechanical fingerprint** — pet phrases, sentence shapes, punctuation rates, formatting quirks. Observable, quotable, density-tracked.
+2. **The cognitive moves** — the repeatable operations the writer performs on an idea before assembling words: how they frame problems, how they test claims, where they concretize, what they refuse, how they shape conclusions. Also observable, also quotable, also tracked per evidence.
+
+Both layers must be evidence-grounded. Every rule, mechanical or cognitive, requires at least two quoted instances from the corpus.
+
+This skill is _not_ a persona-direction skill. It does not capture worldview, opinions, values, beliefs, or vibe descriptors ("warm", "snarky", "earnest"). Those are downstream of cognitive moves and they read fake when ported into a different context. The distinction matters: a cognitive move is "reflexively asks 'compared to what?' before accepting a comparison" — observable in two quoted moments. A vibe descriptor is "is skeptical" — a label, not a move. The move is in scope; the label is not.
+
+This split — mechanics + moves but no persona — is a deliberate position. McFarland's voice plugin argues that pure mechanics produce monotonous output and prefers persona; Dumont's argues for pure mechanics. The cognitive-moves layer is the bridge: the upstream layer that shapes word assembly, while staying as auditable as the mechanics. If output still feels off after both layers are dialed in, the gap is genuinely in persona, and the user should pair this skill with a separate persona prompt.
+
+Voice doesn't operate alone, either. In a content-creator setting, it's one axis of a triple: voice (how it sounds and thinks) + audience (who it's for) + business context (what it's selling or building toward). This skill owns voice. If the user needs the other two, point them at separate ICP and business-profile work.
 
 ## Modes
 
@@ -73,12 +83,15 @@ If you encode platform conventions as personal voice, the imitation will read fi
 
 ### What NOT to capture
 
-- **Opinions, beliefs, or persona.** Style ≠ identity.
+- **Opinions, beliefs, values.** "Believes in transparency." "Pro-open-source." These are downstream of cognitive moves and read fake when ported.
 - **Subject matter / topics.** A corpus about cooking → "writes about food" is not a style rule.
-- **Voice / tone descriptors** ("warm", "snarky", "earnest"). Subjective, hard to verify, push you toward imitating a vibe instead of mechanics.
-- **Generic good-writing virtues** ("uses active voice", "varies sentence length"). Only include if the corpus demonstrates them as a _distinctive_ pattern with numbers.
+- **Voice / tone / personality descriptors** ("warm", "snarky", "earnest", "thoughtful", "contrarian"). Subjective labels. The cognitive-moves layer captures the _moves_ that produce these impressions, with quotes; the labels themselves are out.
+- **Coarse cognitive archetypes** ("thinks like an engineer", "approaches things like a journalist"). Too broad to be useful; quote specific moves instead.
+- **Generic good-writing or good-thinking virtues** ("uses active voice", "considers counterarguments"). Only include if the corpus shows them as _distinctively_ present, with numbers or two quoted instances.
 - **Platform conventions** confused as personal voice.
 - **LLM-isms in the corpus.** If the corpus has clusters of patterns from `references/llm-isms.md`, verify with the user before encoding any of them.
+
+The line between an in-scope cognitive move and an out-of-scope vibe descriptor is the evidence rule: a move is something you can quote two distinct instances of. A vibe descriptor is something you'd have to _argue_ the writer demonstrates. If you're arguing, it's not in scope.
 
 ---
 
@@ -96,9 +109,15 @@ Read `references/extraction-checklist.md` for the full corpus rules. The short v
 
 If the corpus fails any rule, say so explicitly in the profile's _Confidence notes_. A tentative profile from a thin corpus is honest; a confident one is a lie.
 
-### Step 2: Read along the 8 dimensions
+### Step 2: Read along the 8 mechanical dimensions
 
 Run through the dimensions in `references/extraction-checklist.md`: sentence patterns, opening patterns, vocabulary fingerprint, structural patterns, tone markers, formatting habits, language-specific patterns, LLM-ism scan. Treat each independently — patterns in one don't predict patterns in another.
+
+### Step 2b: Read along the cognitive-moves dimensions
+
+Run through the categories in `references/cognitive-moves.md`: framing moves, reasoning moves, concretization tendencies, reflexive rejections, conclusion shape, audience assumptions, argument shape. Use the extraction prompts at the end of that file — they surface moves that a one-pass mechanical read misses.
+
+Apply the same evidence discipline as the mechanical layer: a cognitive move is only a rule if you can quote two distinct moments from the corpus where the writer demonstrably uses it. If you'd have to argue the move is present, it isn't a rule.
 
 ### Step 3: Compute the quantitative layer
 
@@ -152,7 +171,51 @@ When imitating a writer's style, the failure mode is exaggerating one-time patte
 - Don't perform casualness. If the writer is casual, they're casually casual, not theatrically casual.
 - Match densities; don't crank.
 
-## 3. Quantitative layer
+## 3. Cognitive moves & frames
+
+The repeatable operations the writer performs on an idea before assembling words. Position matters: these rules sit above the mechanical sections because they shape _what_ gets assembled, not just how. See `references/cognitive-moves.md` for the extraction methodology. Each rule below has two quoted instances and a move-type classification.
+
+### Framing moves
+
+- [VOICE | high] <Move>. Type: <reframe / reject / steelman / concretize / zoom-out / reduce>. Instances:
+     - "<quote 1 with brief context>"
+     - "<quote 2 with brief context>"
+
+### Reasoning moves
+
+- [VOICE | medium] <Move>. Type: <counterexample / comparison / inversion / incentives / falsification / data / mechanism / constraint>. Instances:
+     - "<quote 1>"
+     - "<quote 2>"
+
+### Concretization tendencies
+
+- [VOICE | high] <Pattern, with density e.g., "every abstract claim paired with a numbered example, 4 of 4 pieces">. Instances:
+     - "<quote 1>"
+     - "<quote 2>"
+
+### Reflexive rejections (things the writer demonstrably refuses)
+
+- [VOICE | high] <Refusal>. Two cases where the writer had the option and didn't take it:
+     - "<context 1>"
+     - "<context 2>"
+
+### Shape of conclusion
+
+- [VOICE | high] <Shape>. Type: <action / open-question / compression / hedge / cut-off>. Closing sentences from two pieces:
+     - "<closing 1>"
+     - "<closing 2>"
+
+### Audience assumptions
+
+- [VOICE | medium] <What the writer doesn't explain that they could>. Evidence: <a technical term used without definition, a reference dropped without context, etc.>
+
+### Argument shape
+
+- [VOICE | high] <Shape>. Type: <stair-step / story-moral / thesis-first / inquiry / empirical / argumentative>. Two pieces showing it:
+     - <how piece 1 is structured>
+     - <how piece 2 is structured>
+
+## 4. Quantitative layer
 
 - Avg sentence length: <N> words; **burstiness (σ)**: <N>
 - Avg paragraph length: <N> sentences
@@ -163,30 +226,30 @@ When imitating a writer's style, the failure mode is exaggerating one-time patte
 - Exclamation rate / 1000w: <N>
 - Top sentence-initial connectors: "<x>" (Nx), "<y>" (Nx), "<z>" (Nx)
 
-## 4. Vocabulary & word choice
+## 5. Vocabulary & word choice
 
 - [VOICE | high] <Rule, with rate>. Example: "<short quote>"
 - [VOICE | medium] <Rule>. Example: "<short quote>"
 - [PLATFORM] <Medium-driven rule>. Example: "<short quote>"
 - Pet phrases recurring verbatim: "<phrase>" (Nx), "<phrase>" (Nx)
 
-## 5. Sentence structure & rhythm
+## 6. Sentence structure & rhythm
 
 - [VOICE | high] <Rule>. Example: "<short quote>"
 - [BORDERLINE] <Rule, flagged>. Example: "<short quote>"
 - Paragraph shape: <description>.
 
-## 6. Quirks & idiosyncrasies
+## 7. Quirks & idiosyncrasies
 
 - [VOICE | high] <Rule, with rate>. Example: "<short quote>"
 - [VOICE | tentative] <Rule>. Example: "<short quote>"
 
-## 7. Negative rules (patterns demonstrably absent)
+## 8. Negative rules (patterns demonstrably absent)
 
 - <Pattern absent — only if absence is striking. e.g., "0 semicolons in 1200 words.">
 - <e.g., "Never uses 'utilize'; uses 'use'.">
 
-## 8. Default mode
+## 9. Default mode
 
 The writer's default register when context isn't specified. Pick one:
 
@@ -196,7 +259,7 @@ The writer's default register when context isn't specified. Pick one:
 
 Document the default explicitly. Without this, generation applies one register uniformly and gets it wrong half the time.
 
-## 9. Format-specific modes
+## 10. Format-specific modes
 
 Same voice, different registers. Without this, every output reads like the writer's most-represented format.
 
@@ -205,7 +268,7 @@ Same voice, different registers. Without this, every output reads like the write
 - **Slack / chat:** <e.g., "lowercase sentence starts, no closing, often single-sentence messages">
 - **Social / public posts:** <e.g., "first sentence carries the hook; no hashtags">
 
-## 10. Voice in action (prompt-ready examples)
+## 11. Voice in action (prompt-ready examples)
 
 Three short examples that demonstrate the voice across the formats above. These compress all the rules into something the user can read and recognize.
 
@@ -213,7 +276,7 @@ Three short examples that demonstrate the voice across the formats above. These 
 - **Email (~3 sentences):** <generated example>
 - **Slack message (~1–2 sentences):** <generated example>
 
-## 11. Confidence notes
+## 12. Confidence notes
 
 - <Rules tentative because evidence was thin.>
 - <Aspects that couldn't be read confidently from this corpus's coverage.>
@@ -267,12 +330,13 @@ Both follow the same steps below; the only difference is whether you're starting
 
 ### Steps
 
-1. **Read the profile top-down.** Order matters. Banned words and anti-performative rules go first because they shape every following generation choice — internalize them before writing a single word.
+1. **Read the profile top-down.** Order matters. Banned words and anti-performative rules go first because they shape every following generation choice. The **cognitive moves** section (Section 3) comes next because it shapes _how the writer would approach this specific topic_ — which is upstream of word choice and sentence shape.
 2. If the input is existing text (humanize), read it once for content, once for which LLM-isms it contains (cross-reference `references/llm-isms.md`). Plan the rewrite at the paragraph level, not the sentence level — wholesale restructuring usually beats find-and-replace.
-3. Check the **priority hierarchy** (next section). Conventions of the writing context (legal, academic, regulated) can override the profile.
-4. Draft (or rewrite). Reproduce profile rules at documented densities. Match densities; don't crank. For the `human` profile especially, **vary sentence length aggressively** — burstiness σ ≥ 7 is the single most important target.
-5. Run the **two-pass self-review** before delivering.
-6. Append the **Rules applied** note (with profile name).
+3. **Apply the cognitive moves to the topic before drafting words.** This is the step most likely to be skipped — don't skip it. Ask: how would this writer frame this question? What would they refuse to accept about it? Where would they concretize? What shape would their argument take? What would the conclusion look like? Do those operations first, mentally. _Then_ draft.
+4. Check the **priority hierarchy** (next section). Conventions of the writing context (legal, academic, regulated) can override the profile.
+5. Draft (or rewrite). Reproduce profile rules at documented densities. Match densities; don't crank. For the `human` profile especially, **vary sentence length aggressively** — burstiness σ ≥ 7 is the single most important target.
+6. Run the **three-pass self-review** before delivering.
+7. Append the **Rules applied** note (with profile name).
 
 ### Priority hierarchy (when style and context conflict)
 
@@ -285,13 +349,15 @@ Personal style does not always win.
 
 When the trade-off kicks in, say so in the Rules applied note.
 
-### Two-pass self-review (do this before delivering)
+### Three-pass self-review (do this before delivering)
 
-These are different failure modes. A single pass tends to catch one and miss the other.
+Three different failure modes. A single pass catches one and misses the others — they need separate attention.
 
 **Pass 1 — LLM-ism scan.** Skim the draft against `references/llm-isms.md`. Cues to look for: stacked em-dashes, "moreover / furthermore / actually", neat tricolons, balanced paragraph lengths, "It's not just X, it's Y" constructions, "navigate the complexities", "in today's fast-paced world", chatbot closers, "great question" sycophancy. For every catalog match: is it in the corpus at this density? If yes, keep. If no, revise.
 
 **Pass 2 — Performative scan.** Look at every place the draft has a "signature move" — a quirk applied loudly. Check the profile's anti-performative rules in Section 2: is this move actually high-density in the corpus, or did you crank a one-time tic into a catchphrase? If cranked, dial it down. The smell test: would the writer's friend roll their eyes reading this?
+
+**Pass 3 — Moves pass.** Read the draft _for the thinking_, ignoring the words. Did it apply the writer's characteristic cognitive moves (Section 3 of the profile)? Or did default-Claude reasoning sneak in — survey 5 angles neutrally, balance both sides, "while X has its merits, Y also has its strengths", land on a synthesis no one asked for, conclude with generic uplift? Common leaks to look for: the writer always concretizes but your draft stayed abstract; the writer reflexively asks "compared to what?" but your draft accepted a comparison at face value; the writer's conclusion shape is "specific action item" but your draft ended in "exciting times ahead." If the mechanics are right but the thinking reads like a committee, fix the thinking. This pass is the one most often skipped and the one that, when skipped, produces "mechanically right, conceptually a stranger" prose.
 
 ### Common failure modes
 
@@ -323,6 +389,7 @@ End the response with:
 
 - LLM-ism pass: <patterns found and removed, OR "none flagged">
 - Performative pass: <quirks dialed back, OR "no cranking detected">
+- Moves pass: <how the writer's cognitive moves shaped this draft — e.g., "applied reframe + concretization + action-item conclusion" — OR "no specific cognitive moves applied (human profile)">
 
 **Trade-offs:** <if priority hierarchy kicked in, mention briefly. Otherwise omit.>
 ```

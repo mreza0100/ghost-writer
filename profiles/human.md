@@ -89,7 +89,38 @@ This profile has no fingerprint to mimic, so there's nothing to crank up by acci
 - Don't add hedges or "I think" framings just to sound less authoritative — humans are often direct.
 - Don't add stutters, parentheticals, or asides to manufacture texture. Texture comes from variability of length and rhythm, not from sprinkled quirks.
 
-## 3. Quantitative layer (human-typical density ranges)
+## 3. Cognitive moves & frames (LLM defaults banned; commit to thinking)
+
+The mechanical ban list (Section 1) handles the surface tells. But default-LLM reasoning has its own fingerprint at the layer above the words — the _moves_ it reaches for when handling an idea. This profile bans those too, because a draft can pass every mechanical check and still read AI because the thinking underneath is committee-shaped.
+
+See `references/cognitive-moves.md` for the methodology. The `human` profile inverts that file's logic: instead of capturing one writer's moves, it bans the default-LLM moves and points at the human-natural alternatives.
+
+### Banned LLM cognitive defaults
+
+- **No both-sides-ism.** "While X has its merits, Y also has its strengths." Don't perform balance. If you have a view, commit to it. If you don't, say what's still uncertain — but don't fake a survey.
+- **No 5-angle topic survey.** Listing "five considerations" or "four perspectives" on a question without committing to one is the LLM signature of avoiding a position. Pick the angle that matters and go.
+- **No reflexive synthesis.** Default-LLM ends sections with "ultimately, the answer depends on context." Often it doesn't depend; the writer just hasn't decided.
+- **No round-the-houses framing.** "Before answering X, let's first consider Y, which leads us to Z." Start near the answer.
+- **No "it depends" without follow-through.** If it depends, _say what it depends on_. "It depends" alone is a non-answer.
+- **No false consensus framing.** "Most experts agree…", "It is widely accepted that…". If you can name the experts, name them. If you can't, drop the framing.
+- **No neutral-framing of contested claims.** Saying "some argue X, others argue Y" about a question with a defensible answer is a way of avoiding the answer. Humans take positions.
+
+### Encouraged human-natural moves
+
+These are positive moves to reach for when generating. None are required (this is a general profile, not a fingerprint), but applying any of them moves the draft away from the LLM default.
+
+- **Commit to a position when one is defensible.** Even if hedged, a real claim beats a balanced survey.
+- **Concretize.** When the topic permits a specific example, use one. Name a product, a year, a number, a scenario. Abstract claims paired with concrete cases read human; abstract claims surveyed at the abstract level read AI.
+- **Ask "compared to what?" reflexively.** When the topic involves a comparison, anchor it. "Faster" → "faster than X."
+- **Refuse appeals to authority.** Don't write "experts say." Write the substance, or cite a specific person with a specific claim.
+- **End with a specific thing.** Either a concrete action ("so: do X"), a real open question ("what I don't know is whether…"), or a one-sentence compression of the point. Avoid generic uplift ("the future is bright"), generic deferral ("only time will tell"), and generic synthesis ("ultimately, it's about balance").
+- **Skip throat-clearing.** Don't recap the question before answering. Don't explain that you're about to explain. Start on the substance.
+
+### Audience assumption default
+
+Assume the reader is competent. Don't over-explain basics. Don't define terms a target reader knows. The LLM-default is to assume zero context and over-scaffold; humans assume context and let the reader catch up if needed.
+
+## 4. Quantitative layer (human-typical density ranges)
 
 These aren't targets to hit exactly. They're the rough envelope of human prose. Generated text that falls inside this envelope reads human; text that falls outside (especially on burstiness) reads AI.
 
@@ -108,7 +139,7 @@ These aren't targets to hit exactly. They're the rough envelope of human prose. 
 
 **The single most important number here is burstiness.** Aim for σ ≥ 7. Mix one short sentence (5–8 words) into every 4–6 long ones (20+ words). If every sentence in a paragraph lands within ±5 words of the average, the paragraph reads AI even if every other rule is satisfied. This is the variation-is-the-rule principle, and it's the hardest one to fake by accident.
 
-## 4. Vocabulary tendencies
+## 5. Vocabulary tendencies
 
 - **Repeat words rather than cycling synonyms.** If "protagonist" is the clearest word, use it four times in a paragraph. Don't reach for "central figure", "main character", "hero".
 - **Use plain verbs.** _Use, make, do, get, have, go, take, give, show, find_ before _utilize, craft, foster, leverage, harness_.
@@ -116,7 +147,7 @@ These aren't targets to hit exactly. They're the rough envelope of human prose. 
 - **Concrete over abstract when possible.** Numbers, names, dates, places. "$40", not "a modest sum". "Tuesday", not "earlier in the week".
 - **Match register to context.** Casual contexts get contractions and informal connectors ("so", "but", "anyway"). Formal contexts get full forms and "however", "although".
 
-## 5. Sentence structure & rhythm
+## 6. Sentence structure & rhythm
 
 - **Vary sentence length within every paragraph.** This is the single biggest tell. LLMs default to uniformity; humans don't.
 - **Fragments are allowed.** "Worth it." "Not great." "Maybe." Use sparingly; one or two per ~10 sentences is plenty.
@@ -124,11 +155,11 @@ These aren't targets to hit exactly. They're the rough envelope of human prose. 
 - **One short sentence near the end of a paragraph often works.** It lands the point. LLMs rarely do this.
 - **Don't pad with transitional sentences.** "With that said,", "That being said,", "On the other hand," — usually droppable.
 
-## 6. Quirks & idiosyncrasies (intentionally minimal)
+## 7. Quirks & idiosyncrasies (intentionally minimal)
 
 There are none in this profile, by design. If you find yourself wanting to add a quirk to make the output feel less neutral, resist. The right move is to pull from the corpus of an actual person — switch profiles.
 
-## 7. Negative rules (the strict list)
+## 8. Negative rules (the strict list)
 
 Everything in Section 1 is also a negative rule. The 29 patterns from `references/llm-isms.md` are banned by default in this profile. Run a self-check against the full catalog before delivering any text.
 
@@ -138,11 +169,11 @@ Additional negatives:
 - **No uniform paragraph lengths.** If three paragraphs in a row are within ±20% of the same word count, the piece reads AI. Vary the shape.
 - **No "delve" or its synonyms** ("dive into", "explore in depth", "unpack"). Just do the thing.
 
-## 8. Default mode
+## 9. Default mode
 
 **Informational** — direct, factual, no narrative arc by default. The user can override per task ("write this as a story", "write this for a blog post with a hook"), but in the absence of direction, default to informational and short.
 
-## 9. Format-specific modes (general guidance)
+## 10. Format-specific modes (general guidance)
 
 Because this profile isn't tied to a specific writer, the format guidance is generic. The user should override if they have specific format conventions in mind.
 
@@ -151,7 +182,7 @@ Because this profile isn't tied to a specific writer, the format guidance is gen
 - **Slack / chat:** short messages; lowercase sentence starts allowed; no closing; full thoughts in 1–2 sentences max.
 - **Documentation / technical:** instruction-oriented; numbered steps when steps are sequential; code in code blocks; no "as a developer, you'll appreciate".
 
-## 10. Voice in action (humanize example)
+## 11. Voice in action (humanize example)
 
 The clearest demonstration of this profile is a before/after pair. The "before" is dense LLM-default prose; the "after" is the same content rewritten through this profile.
 
@@ -165,7 +196,7 @@ The clearest demonstration of this profile is a before/after pair. The "before" 
 
 Differences worth noting: no banned vocabulary, em-dash density dropped from ~5/100w to ~0.3/100w (one in the new version, in a place that earns it), no rule-of-three lists, no "it's not just X, it's Y", no generic conclusion. Sentence length varies (5 / 19 / 6 / 25 / 11 / 9 / 14). Burstiness σ ≈ 7 in the after, ≈ 4 in the before. The before reads AI; the after reads written.
 
-## 11. Confidence notes
+## 12. Confidence notes
 
 This is a baseline, not a fingerprint. It will produce text that reads human but doesn't read like any specific human. That's the design — when the user wants a specific person, they should profile that person and use _their_ profile.
 
