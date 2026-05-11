@@ -1,26 +1,31 @@
 # Ghostwriter
 
-A Claude Code skill that captures the mechanical fingerprint of how someone writes — vocabulary, sentence rhythm, punctuation density, formatting quirks — from a corpus of their writing, and generates new text that reproduces those patterns.
+A Claude Code skill that captures how someone writes — both the mechanical fingerprint (vocabulary, sentence rhythm, punctuation density, formatting quirks) and the cognitive moves underneath it (how they frame problems, what they refuse, where they concretize, how they shape conclusions) — from a corpus of their writing, and generates new text that reproduces both layers.
 
-This is not persona imitation. It doesn't try to capture worldview, opinions, or vibe. It reads observable, measurable patterns and reproduces them at the documented densities. The result is auditable: every rule in a profile has a quoted example and a frequency figure from the source corpus.
+This is not persona imitation. It doesn't try to capture worldview, opinions, or vibe. It reads observable, measurable, quotable patterns at two levels and reproduces them at the documented densities. The result is auditable: every rule in a profile has at least one quoted example from the source corpus, classified by type and rated by confidence.
 
 ## Why this exists
 
-LLMs have a default voice. You've read it: balanced paragraphs, confident verbs, "moreover," neat tricolons, tidy transitions. When you ask an LLM to "write in someone's style," it usually produces its own default prose wearing a costume — a few surface-level quirks layered on top of the same underlying rhythm.
+LLMs have a default voice. You've read it: balanced paragraphs, confident verbs, "moreover," neat tricolons, tidy transitions. When you ask an LLM to "write in someone's style," it usually produces its own default prose wearing a costume — a few surface-level quirks layered on top of the same underlying rhythm and the same default reasoning shape.
 
-Ghostwriter takes a different approach. It builds a structured profile from a corpus of real writing, capturing density-based rules (not just presence/absence), classifying patterns as VOICE vs PLATFORM vs BORDERLINE, and maintaining a banned-words list of LLM-isms the writer demonstrably avoids. Generated text is then checked against a 29-pattern LLM-ism catalog before delivery.
+Ghostwriter takes a different approach. It builds a structured profile from a corpus of real writing across two layers:
+
+- **Mechanical fingerprint** — density-based rules (not just presence/absence), patterns classified as VOICE / PLATFORM / BORDERLINE, a banned-words list of LLM-isms the writer demonstrably avoids.
+- **Cognitive moves** — the repeatable operations the writer performs on an idea _before_ assembling words: framing moves, reasoning moves, concretization tendencies, reflexive rejections, conclusion shape, audience assumptions, argument shape.
+
+Generated text is then checked against a 29-pattern LLM-ism catalog (surface) and the writer's cognitive moves (thinking) before delivery.
 
 ## How it works
 
 ### Five modes
 
-| Mode | Input | Output |
-|------|-------|--------|
-| **A — Extract** | Corpus of writing samples | Structured style profile |
-| **A.5 — Calibrate** | Profile + user feedback on samples | Refined profile |
-| **B — Generate** | Profile + writing prompt | New text in that style |
-| **C — Audit** | Profile + recent writing | Drift report (4 buckets) |
-| **D — Update** | Profile + audit/feedback | Revised profile + changelog |
+| Mode                | Input                              | Output                                 |
+| ------------------- | ---------------------------------- | -------------------------------------- |
+| **A — Extract**     | Corpus of writing samples          | Structured style profile (both layers) |
+| **A.5 — Calibrate** | Profile + user feedback on samples | Refined profile                        |
+| **B — Generate**    | Profile + writing prompt           | New text in that style + audit note    |
+| **C — Audit**       | Profile + recent writing           | Drift report (4 buckets)               |
+| **D — Update**      | Profile + audit/feedback           | Revised profile + changelog            |
 
 Modes chain naturally: A then A.5 for first-time profiling. C then D for maintenance. A then B for one-shot "write like this" requests.
 
@@ -36,6 +41,10 @@ Profiles are living documents, not one-shot artifacts. They compound with iterat
 
 ### What a profile captures
 
+The profile is organized into two layers, with each rule evidence-grounded by quoted examples from the corpus.
+
+**Mechanical layer:**
+
 - **Banned words and phrases** — patterns the writer demonstrably avoids, placed first because position affects generation
 - **Anti-performative rules** — guards against exaggerating one-time patterns into theatrical signature moves
 - **Quantitative layer** — sentence length, burstiness, punctuation rates per 1000 words, contraction rate, hedge-word rate
@@ -45,15 +54,40 @@ Profiles are living documents, not one-shot artifacts. They compound with iterat
 - **Negative rules** — patterns that are strikingly absent
 - **Format-specific modes** — same voice, different registers (blog vs email vs Slack)
 
-Every rule is tagged: VOICE (travels with the writer) / PLATFORM (convention of the medium) / BORDERLINE (ambiguous). Every rule has a quoted example and a confidence level.
+**Cognitive-moves layer:**
+
+- **Framing moves** — reframe, reject, steelman, concretize, zoom-out, reduce
+- **Reasoning moves** — test by counterexample, comparison, inversion, incentives, falsification, mechanism, constraint-finding
+- **Concretization tendencies** — what the writer pairs abstract claims with
+- **Reflexive rejections** — what the writer refuses to accept (appeals to authority, round numbers, "everyone agrees", etc.)
+- **Shape of conclusion** — action item, open question, compression, hedge, cut-off
+- **Audience assumptions** — what's left unsaid because it's assumed
+- **Argument shape** — the structural move-set of how a piece is built
+
+Every rule at both layers is tagged: VOICE (travels with the writer) / PLATFORM (convention of the medium) / BORDERLINE (ambiguous). Cognitive-move rules additionally require at least two quoted instances from the corpus — single occurrences are not patterns.
 
 ### What a profile does NOT capture
 
-- Opinions, beliefs, or persona
+- Opinions, beliefs, values
 - Subject matter or topics
-- Subjective tone descriptors ("warm," "snarky," "earnest")
-- Generic good-writing advice
+- Subjective vibe descriptors ("warm," "snarky," "earnest," "contrarian")
+- Coarse cognitive archetypes ("thinks like an engineer")
+- Generic good-writing or good-thinking virtues (unless distinctively present in the corpus)
 - Platform conventions confused as personal voice
+
+The line between an in-scope cognitive move and an out-of-scope vibe descriptor is the evidence rule: a move is something you can quote two distinct instances of. A vibe descriptor is something you'd have to argue the writer demonstrates.
+
+## Built-in profile: `human`
+
+The repo ships with one default profile at `profiles/human.md`. It's the **negative profile** — instead of capturing one writer's fingerprint, it bans the full 29-pattern LLM-ism catalog at the mechanical layer and the default-LLM reasoning moves (both-sides-ism, 5-angle topic surveys, reflexive synthesis, "it depends" without follow-through, false consensus framing) at the cognitive layer.
+
+Use `human` when:
+
+- You want to "humanize" some AI-sounding text — no specific writer, just remove the tells.
+- You want generic-but-human writing and haven't profiled anyone yet.
+- A specific person's profile is too thin to use confidently — fall back to `human`.
+
+If you don't name a profile, `human` is the default.
 
 ## Installation
 
@@ -69,6 +103,8 @@ mkdir -p .claude/skills/gwriter/profiles
 cp SKILL.md .claude/skills/gwriter/SKILL.md
 cp references/extraction-checklist.md .claude/skills/gwriter/references/
 cp references/llm-isms.md .claude/skills/gwriter/references/
+cp references/cognitive-moves.md .claude/skills/gwriter/references/
+cp profiles/human.md .claude/skills/gwriter/profiles/
 ```
 
 Then use it in Claude Code:
@@ -76,7 +112,7 @@ Then use it in Claude Code:
 ```
 /gwriter profile     — extract a style profile from a corpus
 /gwriter calibrate   — calibrate a profile with feedback
-/gwriter generate    — generate text in a profiled style
+/gwriter generate    — generate text in a profiled style (defaults to `human`)
 /gwriter audit       — audit a profile against recent writing
 /gwriter update      — update a profile from audit findings
 /gwriter list        — list available profiles
@@ -84,15 +120,17 @@ Then use it in Claude Code:
 
 ### As a standalone reference
 
-The files work as a methodology guide even without Claude Code. `SKILL.md` contains the complete extraction and generation methodology. The `references/` directory has the LLM-ism catalog and extraction checklist.
+The files work as a methodology guide even without Claude Code. `SKILL.md` contains the complete extraction and generation methodology. The `references/` directory has the LLM-ism catalog, extraction checklist, and cognitive-moves methodology.
 
 ## Key design decisions
 
+**Two layers, both evidence-grounded.** Mechanics alone produce texturally correct prose that argues like a stranger. Cognitive moves alone produce the right thinking in default-Claude prose. The profile captures both, with the same quote-it-or-it-isn't-real discipline.
+
 **Density, not presence.** "Em-dashes ~7.6/1000w" is a rule. "Uses em-dashes" is not. Presence-only rules produce caricature — every quirk gets cranked to maximum.
 
-**Banned words go first.** Position in the profile matters. Constraints encountered early have stronger influence on generation. The never-say list sits at the top.
+**Banned words go first.** Position in the profile matters. Constraints encountered early have stronger influence on generation. The never-say list sits at the top. The cognitive moves come next because they shape what gets assembled, not just how.
 
-**Two-pass self-review.** Pass 1 scans for LLM-isms (the 29-pattern catalog). Pass 2 scans for performative exaggeration. These are different failure modes — a single pass catches one and misses the other.
+**Three-pass self-review.** Pass 1 scans for LLM-isms (the 29-pattern catalog). Pass 2 scans for performative exaggeration. Pass 3 reads the draft for the _thinking_ — did the writer's cognitive moves apply, or did default-Claude reasoning leak in? These are different failure modes — a single pass catches one and misses the others.
 
 **VOICE vs PLATFORM classification.** Without this, a profile built from Slack messages will produce Slack-style text in every format. The classification prevents platform conventions from being encoded as personal voice.
 
@@ -101,10 +139,12 @@ The files work as a methodology guide even without Claude Code. `SKILL.md` conta
 ## Files
 
 ```
-SKILL.md                           — Complete skill specification (modes, principles, templates)
-references/extraction-checklist.md — Corpus vetting rules and 8-dimension extraction grid
-references/llm-isms.md             — 29-pattern catalog of LLM-tells with detection cues
-profiles/                          — Where extracted profiles are stored
+SKILL.md                            — Complete skill specification (modes, principles, templates)
+references/extraction-checklist.md  — Corpus vetting rules and 8-dimension mechanical extraction grid
+references/llm-isms.md              — 29-pattern catalog of LLM-tells with detection cues
+references/cognitive-moves.md       — Cognitive-moves layer extraction (7 categories + 8 prompts)
+profiles/human.md                   — Built-in default profile (negative profile / humanizer)
+profiles/                           — Where extracted profiles are stored
 ```
 
 ## The LLM-ism catalog
@@ -117,13 +157,28 @@ The `references/llm-isms.md` file catalogs 29 patterns commonly found in LLM-gen
 - **Communication patterns** — chatbot closers, sycophantic tone
 - **Filler and hedging** — filler phrases, excessive hedging, generic conclusions
 
-This catalog is used during extraction (to verify corpus authenticity), calibration (to identify LLM-ism tags), and generation (pre-delivery self-check).
+This catalog is used during extraction (to verify corpus authenticity), calibration (to identify LLM-ism tags), and generation (Pass 1 of the pre-delivery self-check).
+
+## The cognitive-moves catalog
+
+The `references/cognitive-moves.md` file captures the layer upstream of words — the moves the writer performs on an idea before assembling sentences. Seven categories with extraction prompts:
+
+- **Framing moves** — what the writer does to a problem before arguing about it
+- **Reasoning moves** — their reflex when a claim shows up
+- **Concretization tendencies** — what they pair abstract claims with (example, number, scenario, or nothing)
+- **Reflexive rejections** — what they refuse to accept (the most distinctive cognitive fingerprints are often negative)
+- **Shape of conclusion** — how they end a piece
+- **Audience assumptions** — what they leave unsaid because it's assumed
+- **Argument shape** — the structural shape of how an argument is built
+
+The discipline is the same as the mechanical layer: each rule requires two quoted instances. If you'd have to argue a move is present, it isn't a rule.
 
 ## Credits
 
 - Extraction methodology adapted from [Sam Dumont's voice-skill work](https://www.linkedin.com/in/samdumont/)
 - LLM-ism catalog adapted from [blader/humanizer](https://github.com/blader/humanizer) (MIT) and [Wikipedia: Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing)
 - Audit framework (4-bucket drift report) from McFarland's voice plugin methodology
+- Two-layer framing (mechanics + cognitive moves) — own synthesis, bridging Dumont's pure-mechanics approach and McFarland's pure-persona approach
 
 ## License
 

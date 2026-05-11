@@ -2,6 +2,8 @@
 
 A reference used during Mode A (extract) to make sure the corpus is good enough and the analysis covers the dimensions that matter. Read this before beginning extraction; cite specific items by name when you note confidence in the profile.
 
+**Two-layer extraction.** This file covers the **mechanical layer** of extraction — the 8 dimensions of observable surface patterns (vocabulary, sentence structure, formatting, etc.). The **cognitive-moves layer** — framing, reasoning, concretization, refusals, conclusion shape, audience assumptions, argument shape — has its own extraction file: `cognitive-moves.md`. Read both before extracting a non-trivial profile. The mechanical layer alone produces texturally correct prose that argues like a stranger; the cognitive-moves layer alone produces the right thinking in default-Claude prose. You need both.
+
 ## Corpus preparation
 
 Before reading anything, check the corpus against these rules. They came from Sam Dumont's voice-skill methodology and are the difference between capturing a writer's voice and capturing the conventions of one platform they happen to use.
