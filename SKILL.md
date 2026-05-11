@@ -15,17 +15,20 @@ Read these when the situation calls for them. Don't try to keep them all in work
 
 - `references/llm-isms.md` — 29-pattern catalog of LLM-tells. Used during Mode A (corpus sanity-check), Mode A.5 (canonical definition of the `LLM_ISM` tag), and Mode B (pre-delivery self-check).
 - `references/extraction-checklist.md` — corpus preparation rules and the 8-dimension mechanical extraction grid. Read before starting Mode A.
-- `references/cognitive-moves.md` — extraction prompts and categories for the upstream layer (framing, reasoning, concretization, rejections, conclusion shape, audience assumptions, argument shape). Read before extracting any non-trivial profile; read again when generating in Mode B.
+- `references/cognitive-moves.md` — extraction prompts and categories for the idea-level layer (framing, reasoning, concretization, rejections, conclusion shape, audience assumptions, argument shape). Read before extracting any non-trivial profile; read again when generating in Mode B.
+- `references/rhetorical-structure.md` — the essay-arc layer that sits between cognitive moves (idea-level) and the mechanical/vocabulary layers (word/sentence-level): opening shape, full argument arc, scale-shifts, example-texture mix, reference horizon, self-reference patterns, term-coining propensity, meta-commentary, negation-as-thesis, definition-by-compression, aphorism placement, footnote habit. The layer that captures *what shape the piece takes* — easy to miss and central to writers like Paul Graham whose recognizability is largely macro-scale.
 - `references/vocabulary-fingerprint.md` — the lexical layer: verb preferences, hedge vocabulary, intensifiers, synonym binaries, casualism markers, sentence-final and topic-shift vocabulary. Read during Mode A vocabulary extraction; read again during Mode B drafting. This is where classical stylometry's identifying signal lives.
 
 ## What this skill is, and isn't
 
-This skill captures two layers from a corpus and reproduces them in new text:
+This skill captures four layers from a corpus and reproduces them in new text:
 
 1. **The mechanical fingerprint** — pet phrases, sentence shapes, punctuation rates, formatting quirks. Observable, quotable, density-tracked.
-2. **The cognitive moves** — the repeatable operations the writer performs on an idea before assembling words: how they frame problems, how they test claims, where they concretize, what they refuse, how they shape conclusions. Also observable, also quotable, also tracked per evidence.
+2. **The cognitive moves** — the repeatable operations the writer performs on an idea before assembling words: how they frame problems, how they test claims, where they concretize, what they refuse, how they shape conclusions.
+3. **The rhetorical structure** — the essay-scale shape: opening pattern, full argument arc, scale-shifts, example-texture mix, reference horizon, self-reference patterns, term-coining, meta-commentary, negation-as-thesis, aphorism placement, footnote habit. This is the layer that captures what shape the piece takes as it unfolds — the macro layer above sentences and below ideas.
+4. **The vocabulary fingerprint** — the specific words the writer reaches for when alternatives exist: verb preferences, hedges, intensifiers, synonym binaries, casualisms.
 
-Both layers must be evidence-grounded. Every rule, mechanical or cognitive, requires at least two quoted instances from the corpus.
+All four layers must be evidence-grounded. Every rule requires at least two quoted instances from the corpus.
 
 This skill is *not* a persona-direction skill. It does not capture worldview, opinions, values, beliefs, or vibe descriptors ("warm", "snarky", "earnest"). Those are downstream of cognitive moves and they read fake when ported into a different context. The distinction matters: a cognitive move is "reflexively asks 'compared to what?' before accepting a comparison" — observable in two quoted moments. A vibe descriptor is "is skeptical" — a label, not a move. The move is in scope; the label is not.
 
@@ -120,11 +123,24 @@ Run through the categories in `references/cognitive-moves.md`: framing moves, re
 
 Apply the same evidence discipline as the mechanical layer: a cognitive move is only a rule if you can quote two distinct moments from the corpus where the writer demonstrably uses it. If you'd have to argue the move is present, it isn't a rule.
 
-### Step 2c: Extract the vocabulary fingerprint
+### Step 2c: Extract the rhetorical structure
+
+Run through the 12 categories in `references/rhetorical-structure.md`: opening shape, argument arc, scale-shifts, example-texture mix, reference horizon, self-reference pattern, term-coining propensity, meta-commentary, negation-as-thesis, definition-by-compression, aphorism placement, footnote habit.
+
+Use the 12 extraction prompts at the end of that file. Two are especially high-leverage:
+
+- **Sample 10+ piece openings and classify the dominant shape** (paradox / anecdote / question / scene-setting / direct thesis / historical / negation). Most writers have one dominant opening shape across 60%+ of their pieces. Catching this captures a huge amount of macro-scale fingerprint in one move.
+- **Trace the full structural arc of 5 representative pieces.** The arc — "problem → reframe → mechanism → examples → derived advice", or "anecdote → generalization → return-to-anecdote", or whatever shape applies — is one of the most identifying patterns in the corpus and is invisible at the sentence level.
+
+This layer is the most-often-missed layer in style imitation. Writers like Paul Graham are recognizable largely at the macro-scale (paradox openings, scale-shifts from coffee-maker to civilizational, terms coined in passing, footnotes drier than the main text). A profile that nails mechanics and vocabulary but skips this layer will produce sentences that sound right inside paragraphs that don't.
+
+For thinner corpora (<5 pieces or <3000 words), use the abridged extraction in that file — keep 4.1 (opening shape), 4.2 (arc), 4.4 (example-texture mix), 4.7 (coining); skip the density-based items.
+
+### Step 2d: Extract the vocabulary fingerprint
 
 Run through the 12 categories in `references/vocabulary-fingerprint.md`: top content lexicon, function-word patterns, verb preferences, hedge vocabulary, intensifiers, synonym binaries, casualism markers, profanity, sentence-final vocabulary, topic-shift vocabulary, question vocabulary, and lexical banned-by-omission.
 
-Use the 12 extraction prompts at the end of that file. The single highest-leverage section is **5.6 Synonym binaries** — when the writer had a choice between two common alternatives (use/utilize, help/assist, but/however, weird/strange), which side did they pick consistently? Aim for 8–15 binaries from a substantive corpus. Applying these during generation is one of the fastest ways to make output sound like the writer.
+Use the 12 extraction prompts at the end of that file. The single highest-leverage section is **6.6 Synonym binaries** — when the writer had a choice between two common alternatives (use/utilize, help/assist, but/however, weird/strange), which side did they pick consistently? Aim for 8–15 binaries from a substantive corpus. Applying these during generation is one of the fastest ways to make output sound like the writer.
 
 For thinner corpora (<5000 words OR <10 pieces), do the abridged extraction described in that file — skip top-N frequency tables, keep verb preferences, hedges, synonym binaries, casualisms, topic-shift, and pet phrases.
 
@@ -217,7 +233,96 @@ The repeatable operations the writer performs on an idea before assembling words
   - <how piece 1 is structured>
   - <how piece 2 is structured>
 
-## 4. Quantitative layer
+## 4. Rhetorical structure & essay arc
+
+The essay-scale shape — how the writer assembles paragraphs into pieces. Position matters: these rules influence what gets assembled at the macro scale, so they need to be in mind during the planning phase of generation. See `references/rhetorical-structure.md` for methodology. Each rule has at least two quoted instances or a density figure across multiple pieces.
+
+### 4.1 Opening shape
+- Dominant: <e.g., "paradox / counterintuitive claim — 12 of 20 sampled openings">
+- Runner-up: <e.g., "scene-setting — 4 of 20">
+- Instances:
+  - "<piece A opening, with brief context>"
+  - "<piece B opening>"
+
+### 4.2 Argument arc (full essay shape)
+- Dominant arc: <e.g., "problem → reframe → mechanism → examples → derived advice">
+- Alternates: <list any secondary arcs>
+- Instances:
+  - <piece 1 arc traced>
+  - <piece 2 arc traced>
+
+### 4.3 Scale-shifts
+- Rate per 1000w: <N>
+- Dominant direction: <concrete→abstract / abstract→concrete / balanced / sustained-one-scale>
+- Sample shifts:
+  - "<example>"
+  - "<example>"
+
+### 4.4 Example-texture mix
+Percentages roughly summing to 100% across 30+ examples sampled.
+- Personal anecdote: <%>
+- Historical figure / event: <%>
+- Named company / product: <%>
+- Dated anchor: <%>
+- Hypothetical scenario: <%>
+- Numerical / data point: <%>
+- Domain transfer: <%>
+- Quoted source: <%>
+- Imagined dialogue: <%>
+- Dominant categories: <list top 2–3>
+
+### 4.5 Reference horizon
+- Temporal span: <typical range, e.g., "last decade to ~500 years; frequent classical references">
+- Domain span: <e.g., "3–5 distinct domains per piece on average">
+- Domains observed: <list>
+
+### 4.6 Self-reference pattern
+- "I" frequency: <Nx in corpus, or per 1000w>
+- Distribution across 30+ sampled instances:
+  - Confident assertion: <%>
+  - Personal anecdote: <%>
+  - Admitted uncertainty: <%>
+  - Procedural: <%>
+  - Opinion qualifier: <%>
+
+### 4.7 Term-coining propensity
+- Coined terms per 10,000 words: <N>
+- Examples: "<term>", "<term>", "<term>"
+- Typical structural slot: <opening / mid-paragraph / closing / title / scattered>
+- (Or: "no coining observed.")
+
+### 4.8 Meta-commentary on the writing itself
+- Instances per 10,000 words: <N>
+- Examples:
+  - "<quote>"
+  - "<quote>"
+- (Or: "no meta-commentary observed.")
+
+### 4.9 Negation-as-thesis frequency
+- % of piece openings or thesis sentences leading with negation-of-conventional: <%>
+- Examples:
+  - "<thesis>"
+  - "<thesis>"
+
+### 4.10 Definition-by-compression
+- Density per 10,000 words: <N>
+- Examples:
+  - "<surprising-substitution definition>"
+  - "<surprising-substitution definition>"
+
+### 4.11 Aphorism placement
+- Dominant slot: <opening / midway / closing / mixed>
+- Sample placements:
+  - <piece 1: where the aphorism lands>
+  - <piece 2: where the aphorism lands>
+
+### 4.12 Footnote habit (long-form only)
+- Density per 1000 words: <N>
+- Function: <citation / digression / joke / counter-claim / correction>
+- Tonal contrast to main text: <same / drier / funnier / more honest>
+- (Or: N/A — no long-form in corpus.)
+
+## 5. Quantitative layer
 
 - Avg sentence length: <N> words; **burstiness (σ)**: <N>
 - Avg paragraph length: <N> sentences
@@ -228,78 +333,78 @@ The repeatable operations the writer performs on an idea before assembling words
 - Exclamation rate / 1000w: <N>
 - Top sentence-initial connectors: "<x>" (Nx), "<y>" (Nx), "<z>" (Nx)
 
-## 5. Vocabulary fingerprint
+## 6. Vocabulary fingerprint
 
-The lexical layer — the specific words the writer reaches for when alternatives exist. See `references/vocabulary-fingerprint.md` for extraction methodology. Use the full structure below for substantive corpora (≥5000 words AND ≥10 pieces); for thinner corpora keep sections 5.3, 5.4, 5.6, 5.7, 5.10, and pet phrases, and skip the frequency tables in 5.1 and 5.2.
+The lexical layer — the specific words the writer reaches for when alternatives exist. See `references/vocabulary-fingerprint.md` for extraction methodology. Use the full structure below for substantive corpora (≥5000 words AND ≥10 pieces); for thinner corpora keep sections 6.3, 6.4, 6.6, 6.7, 6.10, and pet phrases, and skip the frequency tables in 6.1 and 6.2.
 
-### 5.1 Top content lexicon
+### 6.1 Top content lexicon
 - Top content words (excluding stopwords; 30 for substantive corpora, 15 for thinner):
   "<word>" (Nx), "<word>" (Nx), …
 - Words that travel across pieces (voice, not topic): "<word>", "<word>"
 
-### 5.2 Function-word patterns
+### 6.2 Function-word patterns
 - Standout function-word patterns: "<observation, e.g., 'but' outranks 'however' 12:1>"
 - Pronoun preferences: I/we/you ratios if distinctive.
 
-### 5.3 Verb preferences
+### 6.3 Verb preferences
 - Top 20 verbs by frequency.
 - Plain-to-elevated ratio: <e.g., "85% plain (use, make, do); 1 'utilize' in 8000 words">
 - Identifying verb picks: "<verb>" over "<alternative>" — Nx in corpus.
 
-### 5.4 Hedge vocabulary
+### 6.4 Hedge vocabulary
 - Top hedges with counts: "<hedge>" (Nx), "<hedge>" (Nx)
 - Hedges the writer demonstrably avoids: "<hedge>"
 
-### 5.5 Intensifier vocabulary
+### 6.5 Intensifier vocabulary
 - Top intensifiers with counts: "<word>" (Nx)
 - Intensifiers avoided: "<word>"
 
-### 5.6 Synonym binaries (the diagnostic table)
+### 6.6 Synonym binaries (the diagnostic table)
 - <plain> / <elevated> → uses "<plain>" (Nx vs Nx)
 - [list 8–15 binaries observed in the corpus]
 
-### 5.7 Casualism / internet markers
+### 6.7 Casualism / internet markers
 - (If present) "<marker>" at <density>
 - (If absent — consistently formal register) Note explicitly: no casualism markers observed.
 
-### 5.8 Profanity
+### 6.8 Profanity
 - Rate and specific words, OR explicit "no profanity in corpus."
 
-### 5.9 Sentence-final vocabulary
+### 6.9 Sentence-final vocabulary
 - Dominant shape: <hedge-end / concrete-end / intensifier-end / mixed>
 - Sample endings from corpus.
 
-### 5.10 Topic-shift vocabulary
+### 6.10 Topic-shift vocabulary
 - Most-used topic-shift word: "<word>" (Nx)
 - Other shifts observed, or: no consistent topic-shift word.
 
-### 5.11 Question vocabulary
+### 6.11 Question vocabulary
 - Dominant question shape: "<shape>"
 - Sample questions from corpus.
 
-### 5.12 Banned-by-omission (lexical)
+### 6.12 Banned-by-omission (lexical)
 - Words the writer demonstrably avoids at the lexical level: "<word>", "<word>"
 
 ### Pet phrases (multi-word recurring units)
 - "<phrase>" (Nx), "<phrase>" (Nx)
 
-## 6. Sentence structure & rhythm
+## 7. Sentence structure & rhythm
 
 - [VOICE | high] <Rule>. Example: "<short quote>"
 - [BORDERLINE] <Rule, flagged>. Example: "<short quote>"
 - Paragraph shape: <description>.
 
-## 7. Quirks & idiosyncrasies
+## 8. Quirks & idiosyncrasies
 
 - [VOICE | high] <Rule, with rate>. Example: "<short quote>"
 - [VOICE | tentative] <Rule>. Example: "<short quote>"
 
-## 8. Negative rules (patterns demonstrably absent)
+## 9. Negative rules (patterns demonstrably absent)
 
 - <Pattern absent — only if absence is striking. e.g., "0 semicolons in 1200 words.">
 - <e.g., "Never uses 'utilize'; uses 'use'.">
 
-## 9. Default mode
+## 10. Default mode
 
 The writer's default register when context isn't specified. Pick one:
 - **Informational** — direct, factual, no narrative arc. Shorter, punchier. Set this as default if Slack/email/chat dominates the corpus.
@@ -308,7 +413,7 @@ The writer's default register when context isn't specified. Pick one:
 
 Document the default explicitly. Without this, generation applies one register uniformly and gets it wrong half the time.
 
-## 10. Format-specific modes
+## 11. Format-specific modes
 
 Same voice, different registers. Without this, every output reads like the writer's most-represented format.
 
@@ -317,7 +422,7 @@ Same voice, different registers. Without this, every output reads like the write
 - **Slack / chat:** <e.g., "lowercase sentence starts, no closing, often single-sentence messages">
 - **Social / public posts:** <e.g., "first sentence carries the hook; no hashtags">
 
-## 11. Voice in action (prompt-ready examples)
+## 12. Voice in action (prompt-ready examples)
 
 Three short examples that demonstrate the voice across the formats above. These compress all the rules into something the user can read and recognize.
 
@@ -325,7 +430,7 @@ Three short examples that demonstrate the voice across the formats above. These 
 - **Email (~3 sentences):** <generated example>
 - **Slack message (~1–2 sentences):** <generated example>
 
-## 12. Confidence notes
+## 13. Confidence notes
 
 - <Rules tentative because evidence was thin.>
 - <Aspects that couldn't be read confidently from this corpus's coverage.>
@@ -379,7 +484,12 @@ Both follow the same steps below; the only difference is whether you're starting
 
 ### Steps
 
-1. **Read the profile top-down.** Order matters. Banned words and anti-performative rules go first because they shape every following generation choice. The **cognitive moves** section (Section 3) comes next because it shapes *how the writer would approach this specific topic* — which is upstream of word choice and sentence shape. The **vocabulary fingerprint** (Section 5) comes after — especially Section 5.6 (synonym binaries) and 5.4 (hedges). Internalize the writer's specific verb and hedge picks before drafting, because Claude's defaults will otherwise win every micro-choice.
+1. **Read the profile top-down.** Order matters.
+   - Banned words and anti-performative rules go first (Sections 1, 2) because they shape every following generation choice.
+   - The **cognitive moves** section (Section 3) comes next because it shapes *how the writer would approach this specific topic*.
+   - The **rhetorical structure** section (Section 4) shapes *what the piece will look like as it unfolds*: pick the opening shape, the argument arc, the example-texture mix to aim for, whether to coin a term, where aphorisms will land. Plan the macro shape *before* drafting any sentences.
+   - Then quantitative (Section 5), vocabulary (Section 6) — especially Section 6.6 (synonym binaries) and 6.4 (hedges). Internalize the writer's specific verb and hedge picks before drafting, because Claude's defaults will otherwise win every micro-choice.
+   - Then sentence structure (Section 7) and the remaining sections for the drafting itself.
 2. If the input is existing text (humanize), read it once for content, once for which LLM-isms it contains (cross-reference `references/llm-isms.md`). Plan the rewrite at the paragraph level, not the sentence level — wholesale restructuring usually beats find-and-replace.
 3. **Apply the cognitive moves to the topic before drafting words.** This is the step most likely to be skipped — don't skip it. Ask: how would this writer frame this question? What would they refuse to accept about it? Where would they concretize? What shape would their argument take? What would the conclusion look like? Do those operations first, mentally. *Then* draft.
 4. Check the **priority hierarchy** (next section). Conventions of the writing context (legal, academic, regulated) can override the profile.
@@ -406,13 +516,15 @@ Three different failure modes. A single pass catches one and misses the others �
 
 **Pass 2 — Performative scan.** Look at every place the draft has a "signature move" — a quirk applied loudly. Check the profile's anti-performative rules in Section 2: is this move actually high-density in the corpus, or did you crank a one-time tic into a catchphrase? If cranked, dial it down. The smell test: would the writer's friend roll their eyes reading this?
 
-**Pass 3 — Moves and vocabulary pass.** Two checks in one read.
+**Pass 3 — Moves, structure, and vocabulary pass.** Three checks in one read, each a different lens on the same draft.
 
 *Moves sub-pass.* Read the draft *for the thinking*, ignoring the words. Did it apply the writer's characteristic cognitive moves (Section 3 of the profile)? Or did default-Claude reasoning sneak in — survey 5 angles neutrally, balance both sides, "while X has its merits, Y also has its strengths", land on a synthesis no one asked for, conclude with generic uplift? Common leaks: the writer always concretizes but your draft stayed abstract; the writer reflexively asks "compared to what?" but your draft accepted a comparison at face value; the writer's conclusion shape is "specific action item" but your draft ended in "exciting times ahead." If the mechanics are right but the thinking reads like a committee, fix the thinking.
 
-*Vocabulary sub-pass.* Now scan the *words*. Walk the draft and check: does each verb match the writer's plain-vs-elevated profile (Section 5.3)? Did the hedges and intensifiers come from the writer's lists (Sections 5.4–5.5), or did Claude defaults ("perhaps", "potentially", "arguably", "quite") sneak in? Are the synonym binaries (Section 5.6) being respected — "use" not "utilize", "but" not "however" if those were the writer's picks? Is casualism density right? Did the writer's topic-shift word appear at paragraph breaks, or default-LLM transitions? The single most common vocabulary failure: Claude reaches for the elevated synonym when the writer always picks the plain one. Fix any binary inversions before delivering.
+*Structure sub-pass.* Step back and look at the *macro shape* of the draft. Did the opening shape match the writer's dominant one (Section 4.1) — did you open with paradox if they open with paradox, with anecdote if they open with anecdote? Did the full argument arc match (Section 4.2)? Is the example-texture mix in roughly the right ratios (Section 4.4) — not all personal anecdote when the writer balances anecdote with historical figures and named companies? If the writer coins terms (Section 4.7), is there a coined term in the draft (or a noted absence)? Did the aphorism land in the slot the writer uses (Section 4.11)? The structure pass is the easiest to skip and the easiest to spot in retrospect — generated text that has the right sentences in the wrong arc reads more wrong than vice versa.
 
-Combined, this pass is the one most often skipped and the one that, when skipped, produces "mechanically right, conceptually a stranger" prose — or "thinking right, but worded by someone else."
+*Vocabulary sub-pass.* Now scan the *words*. Walk the draft and check: does each verb match the writer's plain-vs-elevated profile (Section 6.3)? Did the hedges and intensifiers come from the writer's lists (Sections 6.4–6.5), or did Claude defaults ("perhaps", "potentially", "arguably", "quite") sneak in? Are the synonym binaries (Section 6.6) being respected — "use" not "utilize", "but" not "however" if those were the writer's picks? Is casualism density right? Did the writer's topic-shift word appear at paragraph breaks, or default-LLM transitions? The single most common vocabulary failure: Claude reaches for the elevated synonym when the writer always picks the plain one. Fix any binary inversions before delivering.
+
+Combined, this pass is the one most often skipped and the one that, when skipped, produces "mechanically right but conceptually a stranger" prose — or "thinking right but in the wrong shape" — or "thinking and shape right but worded by someone else."
 
 ### Common failure modes
 
@@ -441,8 +553,9 @@ End the response with:
 **Self-review:**
 - LLM-ism pass: <patterns found and removed, OR "none flagged">
 - Performative pass: <quirks dialed back, OR "no cranking detected">
-- Moves and vocabulary pass:
+- Moves, structure, and vocabulary pass:
   - Moves: <how the writer's cognitive moves shaped this draft — e.g., "applied reframe + concretization + action-item conclusion" — OR "no specific cognitive moves applied (human profile)">
+  - Structure: <opening shape used, argument arc followed, example-texture mix approximated, term coined or not — OR "structure layer not yet captured / using human defaults">
   - Vocabulary: <synonym binaries applied, hedges/intensifiers matched, OR "lexical fingerprint not yet captured / using human profile defaults">
 
 **Trade-offs:** <if priority hierarchy kicked in, mention briefly. Otherwise omit.>
@@ -509,7 +622,7 @@ Triggered by: a Mode C drift report, Mode A.5 calibration feedback, or fresh use
 
 - **Mode A:** the profile (saved to file + shown in chat). Optionally followed by Mode A.5.
 - **Mode A.5:** calibration samples + tag-request prompt; after feedback, revised profile + diff.
-- **Mode B:** the new text + the "Rules applied" note (with two-pass self-review).
+- **Mode B:** the new text + the "Rules applied" note (with three-pass self-review).
 - **Mode C:** the 4-bucket drift report (saved + shown).
 - **Mode D:** the diff + updated profile (saved).
 - **Combined:** chain in order, separated by `---`.

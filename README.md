@@ -1,20 +1,21 @@
 # Ghostwriter
 
-A Claude Code skill that captures how someone writes — the mechanical fingerprint (sentence rhythm, punctuation density, formatting quirks), the vocabulary fingerprint (the specific words they reach for when alternatives exist), and the cognitive moves underneath it (how they frame problems, what they refuse, where they concretize, how they shape conclusions) — from a corpus of their writing, and generates new text that reproduces all three layers.
+A Claude Code skill that captures how someone writes — across four layers: the mechanical fingerprint (sentence rhythm, punctuation density, formatting quirks), the cognitive moves (how they frame problems, what they refuse, where they concretize, how they shape conclusions), the rhetorical structure (the essay-scale shape: opening pattern, full argument arc, scale-shifts, example-texture mix, reference horizon, self-reference patterns, term-coining, aphorism placement), and the vocabulary fingerprint (the specific words they reach for when alternatives exist) — from a corpus of their writing, and generates new text that reproduces all four layers.
 
-This is not persona imitation. It doesn't try to capture worldview, opinions, or vibe. It reads observable, measurable, quotable patterns at three levels and reproduces them at the documented densities. The result is auditable: every rule in a profile has at least one quoted example from the source corpus, classified by type and rated by confidence.
+This is not persona imitation. It doesn't try to capture worldview, opinions, or vibe. It reads observable, measurable, quotable patterns at four levels and reproduces them at the documented densities. The result is auditable: every rule in a profile has at least one quoted example from the source corpus, classified by type and rated by confidence.
 
 ## Why this exists
 
-LLMs have a default voice. You've read it: balanced paragraphs, confident verbs, "moreover," neat tricolons, tidy transitions. When you ask an LLM to "write in someone's style," it usually produces its own default prose wearing a costume — a few surface-level quirks layered on top of the same underlying rhythm, the same default vocabulary, and the same default reasoning shape.
+LLMs have a default voice. You've read it: balanced paragraphs, confident verbs, "moreover," neat tricolons, tidy transitions. When you ask an LLM to "write in someone's style," it usually produces its own default prose wearing a costume — a few surface-level quirks layered on top of the same underlying rhythm, the same default vocabulary, the same default reasoning shape, and the same default essay arc.
 
-Ghostwriter takes a different approach. It builds a structured profile from a corpus of real writing across three layers:
+Ghostwriter takes a different approach. It builds a structured profile from a corpus of real writing across four layers:
 
 - **Mechanical fingerprint** — density-based rules (not just presence/absence), patterns classified as VOICE / PLATFORM / BORDERLINE, a banned-words list of LLM-isms the writer demonstrably avoids.
-- **Vocabulary fingerprint** — the specific lexical choices: verb preferences, hedge vocabulary, intensifiers, synonym binaries, casualism markers, sentence-final and topic-shift vocabulary. This is the layer classical stylometry (the Federalist Papers method) leans on most.
 - **Cognitive moves** — the repeatable operations the writer performs on an idea _before_ assembling words: framing moves, reasoning moves, concretization tendencies, reflexive rejections, conclusion shape, audience assumptions, argument shape.
+- **Rhetorical structure** — the essay-scale shape between cognitive moves and the mechanical/vocabulary layers: opening shape, full argument arc, scale-shifts, example-texture mix, reference horizon, self-reference patterns, term-coining propensity, meta-commentary, negation-as-thesis, definition-by-compression, aphorism placement, footnote habit. This is the layer that captures *what shape the piece takes as it unfolds* — and the most-often-missed layer in style imitation.
+- **Vocabulary fingerprint** — the specific lexical choices: verb preferences, hedge vocabulary, intensifiers, synonym binaries, casualism markers, sentence-final and topic-shift vocabulary. This is the layer classical stylometry (the Federalist Papers method) leans on most.
 
-Generated text is then checked against a 29-pattern LLM-ism catalog (surface), the writer's vocabulary fingerprint (words), and the writer's cognitive moves (thinking) before delivery.
+Generated text is then checked against a 29-pattern LLM-ism catalog (surface), the writer's cognitive moves (thinking), the writer's rhetorical structure (shape), and the writer's vocabulary fingerprint (words) before delivery.
 
 ## How it works
 
@@ -22,7 +23,7 @@ Generated text is then checked against a 29-pattern LLM-ism catalog (surface), t
 
 | Mode                | Input                              | Output                                 |
 | ------------------- | ---------------------------------- | -------------------------------------- |
-| **A — Extract**     | Corpus of writing samples          | Structured style profile (both layers) |
+| **A — Extract**     | Corpus of writing samples          | Structured style profile (all four layers) |
 | **A.5 — Calibrate** | Profile + user feedback on samples | Refined profile                        |
 | **B — Generate**    | Profile + writing prompt           | New text in that style + audit note    |
 | **C — Audit**       | Profile + recent writing           | Drift report (4 buckets)               |
@@ -42,7 +43,7 @@ Profiles are living documents, not one-shot artifacts. They compound with iterat
 
 ### What a profile captures
 
-The profile is organized into three layers, with each rule evidence-grounded by quoted examples from the corpus.
+The profile is organized into four layers, with each rule evidence-grounded by quoted examples from the corpus.
 
 **Mechanical layer:**
 
@@ -53,6 +54,31 @@ The profile is organized into three layers, with each rule evidence-grounded by 
 - **Quirks** — idiosyncrasies with density figures
 - **Negative rules** — patterns that are strikingly absent
 - **Format-specific modes** — same voice, different registers (blog vs email vs Slack)
+
+**Cognitive-moves layer:**
+
+- **Framing moves** — reframe, reject, steelman, concretize, zoom-out, reduce
+- **Reasoning moves** — test by counterexample, comparison, inversion, incentives, falsification, mechanism, constraint-finding
+- **Concretization tendencies** — what the writer pairs abstract claims with
+- **Reflexive rejections** — what the writer refuses to accept (appeals to authority, round numbers, "everyone agrees", etc.)
+- **Shape of conclusion** — action item, open question, compression, hedge, cut-off
+- **Audience assumptions** — what's left unsaid because it's assumed
+- **Argument shape** — the structural move-set of how a piece is built
+
+**Rhetorical-structure layer:**
+
+- **Opening shape** — paradox, anecdote, question, scene-setting, direct thesis, negation, etc., with density
+- **Full argument arc** — the macro shape of the piece end-to-end
+- **Scale-shifts** — rate of concrete↔abstract movement and dominant direction
+- **Example-texture mix** — ratios of personal anecdote / historical figure / named company / dated anchor / hypothetical / data / domain-transfer
+- **Reference horizon** — temporal span and domain span of citations
+- **Self-reference pattern** — when "I" appears and what it's doing (confident assertion / anecdote / uncertainty / procedural)
+- **Term-coining propensity** — coined terms per 10,000 words, with structural slot
+- **Meta-commentary on the writing itself** — when the writer steps outside the argument
+- **Negation-as-thesis frequency** — opening or thesis sentences leading with negation-of-conventional
+- **Definition-by-compression** — surprising "X is Y" substitutions used as central tools
+- **Aphorism placement** — where compressed principles land in the piece
+- **Footnote habit** — density, function, tonal contrast (long-form only)
 
 **Vocabulary-fingerprint layer:**
 
@@ -70,17 +96,7 @@ The profile is organized into three layers, with each rule evidence-grounded by 
 - **Banned-by-omission (lexical)** — words the writer demonstrably avoids
 - **Pet phrases** — multi-word recurring units with counts
 
-**Cognitive-moves layer:**
-
-- **Framing moves** — reframe, reject, steelman, concretize, zoom-out, reduce
-- **Reasoning moves** — test by counterexample, comparison, inversion, incentives, falsification, mechanism, constraint-finding
-- **Concretization tendencies** — what the writer pairs abstract claims with
-- **Reflexive rejections** — what the writer refuses to accept (appeals to authority, round numbers, "everyone agrees", etc.)
-- **Shape of conclusion** — action item, open question, compression, hedge, cut-off
-- **Audience assumptions** — what's left unsaid because it's assumed
-- **Argument shape** — the structural move-set of how a piece is built
-
-Every rule at all three layers is tagged: VOICE (travels with the writer) / PLATFORM (convention of the medium) / BORDERLINE (ambiguous). Cognitive-move rules and vocabulary-binary rules additionally require at least two quoted instances from the corpus — single occurrences are not patterns.
+Every rule at all four layers is tagged: VOICE (travels with the writer) / PLATFORM (convention of the medium) / BORDERLINE (ambiguous). Cognitive-move rules, rhetorical-structure rules, and vocabulary-binary rules additionally require at least two quoted instances from the corpus — single occurrences are not patterns.
 
 ### What a profile does NOT capture
 
@@ -95,7 +111,7 @@ The line between an in-scope cognitive move and an out-of-scope vibe descriptor 
 
 ## Built-in profile: `human`
 
-The repo ships with one default profile at `profiles/human.md`. It's the **negative profile** — instead of capturing one writer's fingerprint, it bans the full 29-pattern LLM-ism catalog at the mechanical layer and the default-LLM reasoning moves (both-sides-ism, 5-angle topic surveys, reflexive synthesis, "it depends" without follow-through, false consensus framing) at the cognitive layer.
+The repo ships with one default profile at `profiles/human.md`. It's the **negative profile** — instead of capturing one writer's fingerprint, it bans the full 29-pattern LLM-ism catalog at the mechanical layer, the default-LLM reasoning moves (both-sides-ism, 5-angle topic surveys, reflexive synthesis, "it depends" without follow-through, false consensus framing) at the cognitive layer, the default-LLM rhetorical patterns (five-point listicles, "In conclusion," closers, manufactured paradox openers, sub-headers every 200 words, footnote cosplay) at the rhetorical layer, and the default-LLM vocabulary (perhaps / potentially / quite / utilize / leverage) at the vocabulary layer.
 
 Use `human` when:
 
@@ -120,6 +136,7 @@ cp SKILL.md .claude/skills/gwriter/SKILL.md
 cp references/extraction-checklist.md .claude/skills/gwriter/references/
 cp references/llm-isms.md .claude/skills/gwriter/references/
 cp references/cognitive-moves.md .claude/skills/gwriter/references/
+cp references/rhetorical-structure.md .claude/skills/gwriter/references/
 cp references/vocabulary-fingerprint.md .claude/skills/gwriter/references/
 cp profiles/human.md .claude/skills/gwriter/profiles/
 ```
@@ -137,17 +154,17 @@ Then use it in Claude Code:
 
 ### As a standalone reference
 
-The files work as a methodology guide even without Claude Code. `SKILL.md` contains the complete extraction and generation methodology. The `references/` directory has the LLM-ism catalog, extraction checklist, cognitive-moves methodology, and vocabulary-fingerprint methodology.
+The files work as a methodology guide even without Claude Code. `SKILL.md` contains the complete extraction and generation methodology. The `references/` directory has the LLM-ism catalog, extraction checklist, cognitive-moves methodology, rhetorical-structure methodology, and vocabulary-fingerprint methodology.
 
 ## Key design decisions
 
-**Three layers, all evidence-grounded.** Mechanics alone produce texturally correct prose that argues like a stranger. Vocabulary alone produces the right words assembled by someone with a different mind. Cognitive moves alone produce the right thinking in default-Claude prose. The profile captures all three, with the same quote-it-or-it-isn't-real discipline.
+**Four layers, all evidence-grounded.** Mechanics alone produce texturally correct prose that argues like a stranger. Cognitive moves alone produce the right thinking in default-Claude prose. Rhetorical structure alone produces the right shape filled with the wrong sentences. Vocabulary alone produces the right words assembled by someone with a different mind. The profile captures all four, with the same quote-it-or-it-isn't-real discipline.
 
 **Density, not presence.** "Em-dashes ~7.6/1000w" is a rule. "Uses em-dashes" is not. Presence-only rules produce caricature — every quirk gets cranked to maximum.
 
-**Banned words go first.** Position in the profile matters. Constraints encountered early have stronger influence on generation. The never-say list sits at the top. The cognitive moves come next because they shape what gets assembled, not just how. Vocabulary fingerprint comes after, with the synonym-binaries table loaded before drafting starts.
+**Banned words go first; macro shape comes before words.** Position in the profile matters. Constraints encountered early have stronger influence on generation. The never-say list sits at the top. Cognitive moves come next because they shape what gets assembled. Rhetorical structure comes after, because the piece's macro shape gets planned before any sentence is written. Then quantitative numbers and vocabulary fingerprint feed the drafting itself.
 
-**Three-pass self-review.** Pass 1 scans for LLM-isms (the 29-pattern catalog). Pass 2 scans for performative exaggeration. Pass 3 reads the draft for the _thinking_ (did the writer's cognitive moves apply) and the _words_ (did the synonym binaries get respected; did the writer's hedges and intensifiers show up rather than Claude defaults). These are different failure modes — a single pass catches one and misses the others.
+**Three-pass self-review.** Pass 1 scans for LLM-isms (the 29-pattern catalog). Pass 2 scans for performative exaggeration. Pass 3 reads the draft along three sub-checks: the _thinking_ (did the writer's cognitive moves apply), the _shape_ (did the opening, arc, example-mix, term-coining match the writer's), and the _words_ (did the synonym binaries get respected; did the writer's hedges and intensifiers show up rather than Claude defaults). These are different failure modes — a single pass catches one and misses the others.
 
 **VOICE vs PLATFORM classification.** Without this, a profile built from Slack messages will produce Slack-style text in every format. The classification prevents platform conventions from being encoded as personal voice.
 
@@ -160,6 +177,7 @@ SKILL.md                             — Complete skill specification (modes, pr
 references/extraction-checklist.md   — Corpus vetting rules and 8-dimension mechanical extraction grid
 references/llm-isms.md               — 29-pattern catalog of LLM-tells with detection cues
 references/cognitive-moves.md        — Cognitive-moves layer extraction (7 categories + 8 prompts)
+references/rhetorical-structure.md   — Rhetorical-structure layer extraction (12 categories + 12 prompts)
 references/vocabulary-fingerprint.md — Vocabulary-fingerprint layer extraction (12 categories + 12 prompts)
 profiles/human.md                    — Built-in default profile (negative profile / humanizer)
 profiles/                            — Where extracted profiles are stored
@@ -191,6 +209,25 @@ The `references/cognitive-moves.md` file captures the layer upstream of words �
 
 The discipline is the same as the mechanical layer: each rule requires two quoted instances. If you'd have to argue a move is present, it isn't a rule.
 
+## The rhetorical-structure catalog
+
+The `references/rhetorical-structure.md` file captures the essay-arc layer — the shape the piece takes as it unfolds. This is the most-often-missed layer in style imitation; writers like Paul Graham are recognizable largely at this macro scale. Twelve categories with twelve extraction prompts:
+
+- **Opening shape** — paradox, anecdote, question, scene-setting, direct thesis, historical, negation, quoted, numerical, definition
+- **Full argument arc** — the macro shape of the piece (problem→reframe→mechanism→examples→advice, or anecdote→generalization, or definition→consequences, etc.)
+- **Scale-shifts** — rate and direction of concrete↔abstract movement
+- **Example-texture mix** — ratios of personal anecdote / historical / named-company / dated-anchor / hypothetical / data / domain-transfer
+- **Reference horizon** — temporal span and domain span of citations within and across pieces
+- **Self-reference pattern** — what "I" is doing across instances (confident assertion / anecdote / uncertainty / procedural / opinion)
+- **Term-coining propensity** — coined terms per 10,000 words, and the structural slot they occupy
+- **Meta-commentary on the writing itself** — when the writer steps outside the argument
+- **Negation-as-thesis frequency** — thesis sentences leading with negation-of-conventional rather than positive-claim
+- **Definition-by-compression** — surprising "X is Y" substitutions used as central tools
+- **Aphorism placement** — opening, midway, closing, or mixed
+- **Footnote habit** — density, function, tonal contrast to main text (long-form writers only)
+
+The two highest-leverage sections are **4.1 (opening shape)** and **4.2 (argument arc)** — most writers have one dominant opening shape and one dominant arc, and catching them captures a huge amount of macro-scale fingerprint in two moves.
+
 ## The vocabulary-fingerprint catalog
 
 The `references/vocabulary-fingerprint.md` file captures the lexical layer — the specific words the writer reaches for when alternatives exist. This is where classical stylometry's identifying signal lives (the Federalist Papers attribution method works on this layer). Twelve categories with twelve extraction prompts:
@@ -216,7 +253,7 @@ The single highest-leverage section is the synonym-binaries table. Applying thos
 - LLM-ism catalog adapted from [blader/humanizer](https://github.com/blader/humanizer) (MIT) and [Wikipedia: Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing)
 - Vocabulary-fingerprint methodology draws on classical stylometry (function-word frequency, type-token ratio, lexical attribution)
 - Audit framework (4-bucket drift report) from McFarland's voice plugin methodology
-- Three-layer framing (mechanics + vocabulary + cognitive moves) — own synthesis, bridging Dumont's pure-mechanics approach and McFarland's pure-persona approach
+- Four-layer framing (mechanics + cognitive moves + rhetorical structure + vocabulary) — own synthesis, bridging Dumont's pure-mechanics approach and McFarland's pure-persona approach. The rhetorical-structure layer was added after profiling Paul Graham and noticing that mechanics + vocabulary + cognitive moves captured the sentences but missed the macro shape that makes a PG essay a PG essay.
 
 ## License
 

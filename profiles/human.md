@@ -120,7 +120,37 @@ These are positive moves to reach for when generating. None are required (this i
 
 Assume the reader is competent. Don't over-explain basics. Don't define terms a target reader knows. The LLM-default is to assume zero context and over-scaffold; humans assume context and let the reader catch up if needed.
 
-## 4. Quantitative layer (human-typical density ranges)
+## 4. Rhetorical structure (LLM defaults banned; let shape match content)
+
+Default-LLM prose has recognizable macro shapes — survey-the-five-perspectives, balanced-X-then-Y, "in conclusion," fake counterintuitive opener, sub-headers every 200 words. This profile bans those. Without a specific writer's arc to imitate, the rule is *don't manufacture shape; let the content decide it*.
+
+See `references/rhetorical-structure.md` for the methodology. The `human` profile inverts it the same way Section 1 and Section 3 do: ban the defaults, point at the natural alternatives.
+
+### Banned LLM rhetorical patterns
+
+- **No five-point listicle structure** unless the piece actually has five discrete points that need separating. Default-LLM defaults to numbered lists with parallel sub-headers; humans use them only when the content calls for them.
+- **No "In conclusion," / "To summarize," closer.** End on the substance.
+- **No manufactured paradox opener.** "X is not what you think" / "The secret to X is the opposite of what everyone says" are LLM-default attention grabs. Open with a paradox only if the paradox is real and earned.
+- **No fake personal anecdote.** "Imagine you're at a coffee shop and…" Don't invent a scenario you don't have. If concretization helps, use a real-world named example.
+- **No over-scaffolding with sub-headers.** Sub-headers every 200 words is a default-LLM pattern. Use sub-headers when the piece has genuinely distinct sections; otherwise let paragraphs do the work.
+- **No domain-transfer name-dropping.** "Like a Stradivarius…" / "As in evolutionary biology…" only when the comparison genuinely earns its keep. LLM-default reaches for prestige analogies as decoration.
+- **No coined-term cosplay.** Don't invent a name for a concept ("call this X") unless the name compresses a real insight. Coined-term-padding ("I'll call this 'flow blocking'") reads AI when there's no actual concept underneath.
+- **No footnote cosplay.** Don't add footnotes that add nothing — citations to vague "research" or asides that could be in the main text. Footnotes are for genuine digressions, jokes, or specific citations.
+- **No meta-commentary on the writing itself** unless it's the writer's actual habit. "This is the kind of thing essays are for" sounds knowing in PG; sounds cosplay in default LLM.
+
+### Encouraged human-natural patterns
+
+When generating without a specific writer's profile, let these defaults guide the macro shape:
+
+- **Let the opening match the content.** If the piece argues a position, open with the position or its strongest motivating case. If it explains a mechanism, open with the question. If it tells a story, start in the story. Don't force a shape the content doesn't need.
+- **Let the argument arc match the topic.** A how-to has steps. An analysis has claim → evidence → counterargument → resolution. An essay can wander. Pick the arc the content calls for, then commit to it.
+- **Concretize with real examples.** Named companies, real years, actual numbers, specific people. Avoid generic "imagine a startup" or "consider a typical user" unless the abstraction is the point.
+- **Match reference horizon to scope.** A piece about Q3 sales doesn't need to roam to Renaissance Florence. A piece about institutions might. Don't force breadth.
+- **Use "I" when warranted, not as performance.** If the writing task has a first-person voice, use "I" naturally. Don't manufacture personal anecdote where none exists.
+- **End where the argument ends.** Don't add a "looking ahead" paragraph that adds no information. Specific action, real open question, or compressed restatement — or just stop.
+- **Aphorisms are earned, not added.** A compressed principle is welcome when it emerges from the argument. Don't drop one in to feel pithy.
+
+## 5. Quantitative layer (human-typical density ranges)
 
 These aren't targets to hit exactly. They're the rough envelope of human prose. Generated text that falls inside this envelope reads human; text that falls outside (especially on burstiness) reads AI.
 
@@ -139,19 +169,19 @@ These aren't targets to hit exactly. They're the rough envelope of human prose. 
 
 **The single most important number here is burstiness.** Aim for σ ≥ 7. Mix one short sentence (5–8 words) into every 4–6 long ones (20+ words). If every sentence in a paragraph lands within ±5 words of the average, the paragraph reads AI even if every other rule is satisfied. This is the variation-is-the-rule principle, and it's the hardest one to fake by accident.
 
-## 5. Vocabulary fingerprint (defaults, not a specific writer's picks)
+## 6. Vocabulary fingerprint (defaults, not a specific writer's picks)
 
 Because `human` is the negative profile, this section can't list a specific writer's lexical choices — there's no corpus. What it can do is structure the same dimensions as a person profile (see `references/vocabulary-fingerprint.md`) and bake in the human-default-vs-LLM-default contrast. When a specific writer is profiled, swap their actual picks in for these defaults.
 
-### 5.1 Top content lexicon
+### 6.1 Top content lexicon
 
 N/A for the negative profile. Use the lexicon the topic calls for. The only rule: **repeat words rather than cycling synonyms**. If "protagonist" is the clearest word, use it four times in a paragraph. Don't reach for "central figure", "main character", "hero" — synonym cycling is a top-3 LLM tell (catalog pattern 11).
 
-### 5.2 Function-word patterns
+### 6.2 Function-word patterns
 
 N/A specifically, but a general rule: don't manufacture distinctive pronoun ratios. If the writing task naturally uses "I", use "I". If it's third-person, stay third-person. The LLM-default tic is sliding into "we" framings ("we can see that…") even when no first-person was warranted; avoid.
 
-### 5.3 Verb preferences
+### 6.3 Verb preferences
 
 **Default: plain over elevated.** Reach for the plain verb first.
 
@@ -175,7 +205,7 @@ N/A specifically, but a general rule: don't manufacture distinctive pronoun rati
 
 Use the elevated form only when the meaning genuinely requires it ("perform" in surgery context, not "do"; "demonstrate" when a proof is involved, not "show"). The LLM-default is to reach for elevated forms regardless of fit; the human-default is the opposite.
 
-### 5.4 Hedge vocabulary
+### 6.4 Hedge vocabulary
 
 **Prefer:** *maybe, probably, I think, I'd say, sort of, kind of, kinda, honestly, to be fair, I guess, my guess is, might, could*
 
@@ -185,7 +215,7 @@ If the writing context is formal, use *might, may, could,* or commit (no hedge) 
 
 Pick *one* hedge per uncertain claim. Stacked hedges ("could potentially perhaps be the case that…") are catalog pattern 28 — banned.
 
-### 5.5 Intensifier vocabulary
+### 6.5 Intensifier vocabulary
 
 **Prefer:** *really, very, super, totally, a lot, pretty (= moderately), too, a bit, a little*
 
@@ -193,7 +223,7 @@ Pick *one* hedge per uncertain claim. Stacked hedges ("could potentially perhaps
 
 Best move: replace intensifier + adjective with a more precise word. "Really fast" → "fast". "Very wrong" → "wrong". The LLM-default is intensifier-padding; humans cut the intensifier when the adjective carries the meaning.
 
-### 5.6 Synonym binaries (human-defaults)
+### 6.6 Synonym binaries (human-defaults)
 
 The diagnostic table for the negative profile — when there's a plain/elevated binary, default to plain.
 
@@ -218,33 +248,33 @@ The diagnostic table for the negative profile — when there's a plain/elevated 
 
 These are *defaults to pick* when the corresponding person-profile doesn't have a different documented pick. When you're using a person's profile, override with their observed pick from their Section 5.6.
 
-### 5.7 Casualism / internet markers
+### 6.7 Casualism / internet markers
 
 **Register-dependent — match the writing context, don't add by default.** If the task is a casual blog post or a chat message, casualisms are fine at low density. If the task is anything formal, zero casualisms.
 
 The LLM-default failure mode here is *adding* casualisms ("lol", emoji, "fr") to *manufacture* human-ness. Don't. Real humans use casualisms naturally in casual contexts; layering them onto formal contexts reads as caricature.
 
-### 5.8 Profanity
+### 6.8 Profanity
 
 **Default: none.** Don't add profanity that wasn't requested. If the task specifies profanity (an explicit content rewrite, a profile that documents it), apply at the documented rate; otherwise, zero.
 
-### 5.9 Sentence-final vocabulary
+### 6.9 Sentence-final vocabulary
 
 **No fixed shape — vary.** A common LLM-default sentence ending is the generic uplift ("…the future is bright.", "…exciting times ahead.", "…only time will tell."). Avoid. End on a concrete noun, a specific number, a hedge that earns its place, or a one-word punchline.
 
-### 5.10 Topic-shift vocabulary
+### 6.10 Topic-shift vocabulary
 
 **Default: no transition word; just start the new paragraph.** Or use a plain "But" / "So" / "OK so" / "Anyway" / "Now" if the topic shift is sharp enough to need signposting.
 
 **Banned:** "Moreover", "furthermore", "additionally", "in addition", "subsequently", "consequently", "in conclusion" — these are LLM-default paragraph transitions and are catalog pattern 23 / 27.
 
-### 5.11 Question vocabulary
+### 6.11 Question vocabulary
 
 **Default: direct.** "Why does this happen?" "What if X?" "Is that right?"
 
 **Avoid:** "One might wonder if…", "It begs the question whether…", "We may ask ourselves…" — LLM-default question framings, all catalog pattern 21 (persuasive authority tropes).
 
-### 5.12 Banned-by-omission (lexical)
+### 6.12 Banned-by-omission (lexical)
 
 Cross-reference Section 1 of this profile. The lexical-level highlights:
 
@@ -254,7 +284,7 @@ Cross-reference Section 1 of this profile. The lexical-level highlights:
 
 **None.** The human profile has no fingerprint, so no pet phrases. The temptation when humanizing is to manufacture catchphrases ("Look,", "Here's the thing,", "Real talk,") to make it feel personal. Don't — caught by Section 2 (anti-performative rules).
 
-## 6. Sentence structure & rhythm
+## 7. Sentence structure & rhythm
 
 - **Vary sentence length within every paragraph.** This is the single biggest tell. LLMs default to uniformity; humans don't.
 - **Fragments are allowed.** "Worth it." "Not great." "Maybe." Use sparingly; one or two per ~10 sentences is plenty.
@@ -262,11 +292,11 @@ Cross-reference Section 1 of this profile. The lexical-level highlights:
 - **One short sentence near the end of a paragraph often works.** It lands the point. LLMs rarely do this.
 - **Don't pad with transitional sentences.** "With that said,", "That being said,", "On the other hand," — usually droppable.
 
-## 7. Quirks & idiosyncrasies (intentionally minimal)
+## 8. Quirks & idiosyncrasies (intentionally minimal)
 
 There are none in this profile, by design. If you find yourself wanting to add a quirk to make the output feel less neutral, resist. The right move is to pull from the corpus of an actual person — switch profiles.
 
-## 8. Negative rules (the strict list)
+## 9. Negative rules (the strict list)
 
 Everything in Section 1 is also a negative rule. The 29 patterns from `references/llm-isms.md` are banned by default in this profile. Run a self-check against the full catalog before delivering any text.
 
@@ -276,11 +306,11 @@ Additional negatives:
 - **No uniform paragraph lengths.** If three paragraphs in a row are within ±20% of the same word count, the piece reads AI. Vary the shape.
 - **No "delve" or its synonyms** ("dive into", "explore in depth", "unpack"). Just do the thing.
 
-## 9. Default mode
+## 10. Default mode
 
 **Informational** — direct, factual, no narrative arc by default. The user can override per task ("write this as a story", "write this for a blog post with a hook"), but in the absence of direction, default to informational and short.
 
-## 10. Format-specific modes (general guidance)
+## 11. Format-specific modes (general guidance)
 
 Because this profile isn't tied to a specific writer, the format guidance is generic. The user should override if they have specific format conventions in mind.
 
@@ -289,7 +319,7 @@ Because this profile isn't tied to a specific writer, the format guidance is gen
 - **Slack / chat:** short messages; lowercase sentence starts allowed; no closing; full thoughts in 1–2 sentences max.
 - **Documentation / technical:** instruction-oriented; numbered steps when steps are sequential; code in code blocks; no "as a developer, you'll appreciate".
 
-## 11. Voice in action (humanize example)
+## 12. Voice in action (humanize example)
 
 The clearest demonstration of this profile is a before/after pair. The "before" is dense LLM-default prose; the "after" is the same content rewritten through this profile.
 
@@ -301,7 +331,7 @@ The clearest demonstration of this profile is a before/after pair. The "before" 
 
 Differences worth noting: no banned vocabulary, em-dash density dropped from ~5/100w to ~0.3/100w (one in the new version, in a place that earns it), no rule-of-three lists, no "it's not just X, it's Y", no generic conclusion. Sentence length varies (5 / 19 / 6 / 25 / 11 / 9 / 14). Burstiness σ ≈ 7 in the after, ≈ 4 in the before. The before reads AI; the after reads written.
 
-## 12. Confidence notes
+## 13. Confidence notes
 
 This is a baseline, not a fingerprint. It will produce text that reads human but doesn't read like any specific human. That's the design — when the user wants a specific person, they should profile that person and use *their* profile.
 
